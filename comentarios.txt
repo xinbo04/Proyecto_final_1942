@@ -1,0 +1,25 @@
+ejercicio 10:
+
+Tablero:
+    ancho
+    alto
+    avion
+    lista_enemigos
+    __init__
+Avion:
+    x
+    y
+    lista_sprites
+    vidas
+    lista_proyectil
+Enemigo:
+    x
+    y
+    lista_sprite -> herencia con Enemigo regular, enemigo rojo, bombardero,
+    superbombardero
+
+Proyectil:
+    x
+    y
+    sprite
+    lista_proyectiles
