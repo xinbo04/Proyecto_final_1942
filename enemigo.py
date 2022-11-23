@@ -3,6 +3,8 @@ Created by XINBO CHEN CHEN in nov 2022
 Universidad Carlos III de Madrid
 """
 import constantes
+
+
 class Enemigo:
 
     def __init__(self, x: int, y: int, tipo: str):
@@ -11,7 +13,7 @@ class Enemigo:
         self.tipo = tipo
 
         # Para el sprite tenemos la tupla (banco, x , y, ancho, alto)
-        #ESTO ESTÁ HECHO SIN HERENCIA, HAY QUE USAR HERENCIA
+        # ESTO ESTÁ HECHO SIN HERENCIA, HAY QUE USAR HERENCIA
         if tipo == "REGULAR":
             self.sprite = constantes.SPRITE_REGULAR
         elif tipo == "ROJO":
