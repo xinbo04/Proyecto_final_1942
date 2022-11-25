@@ -22,3 +22,6 @@ Proyectil:
     y
     sprite
     lista_proyectiles
+
+
+hggjhjttjt
