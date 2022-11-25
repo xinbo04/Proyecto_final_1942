@@ -23,6 +23,5 @@ Proyectil:
     sprite
     lista_proyectiles
 
-
+gauad
 hggjhdggdgjttjt
-ajdkjtqe
