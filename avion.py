@@ -33,8 +33,8 @@ class Avion:
               self.x > 0):
             self.x -= 1
         if (direccion.lower() == "abajo" and
-                self.y < tamaño - tamaño_avion_y):
+                self.y < 228 ):
             self.y += 1
         elif (direccion.lower() == "arriba" and
-              self.y > 0):
+              self.y > 81):
             self.y -= 1
