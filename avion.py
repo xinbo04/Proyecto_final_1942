@@ -12,9 +12,9 @@ class Avion:
         self.y = y
 
         # Aquí indicamos que la imagen del avión estará en el
-        # banco=0, 5-25 x 6-15 (tamaño avión principal: 20x9), colkey=8
+        # banco=0, 0,0 a 25,16, colkey=14 .ff9798
         lista_sprites = []
-        self.sprite = (0, 5, 6, 25, 15, 8)
+        self.sprite = (0, 0, 0, 25, 16, 14)
         # Establecemos que tiene tres vidas al principio del juego
         self.vidas = 3
 
