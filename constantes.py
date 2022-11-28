@@ -11,6 +11,7 @@ ALTO = 256
 # para lista de sprites
 AVION_SPRITE = ((0, 5, 6, 25, 15, 8),)
 AVION_INICIAL = (ANCHO / 2, 200)
+AVION_VELOCIDAD = 5
 
 # Enemigos
 SPRITE_REGULAR = ((0, 16, 0, 16, 16),)

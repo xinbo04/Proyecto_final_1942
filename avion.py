@@ -1,3 +1,5 @@
+import constantes
+
 class Avion:
     """Esta clase almacena la información necesaria para nuestro
     avión. Es muy probable que necesitemos más atributos, aquí mostramos
@@ -13,8 +15,12 @@ class Avion:
 
         # Aquí indicamos que la imagen del avión estará en el
         # banco=0, 0,0 a 25,16, colkey=14 #ff9798
+        # img, u, v, w, h, [colkey]
         lista_sprites = []
         self.sprite = (0, 0, 0, 25, 16, 14)
+        #para la hélice, si ponemos un número negativo se invierte la imagen
+        # horizontalmente
+        self.helice = (0, 4, 1, -7, 1)
         # Establecemos que tiene tres vidas al principio del juego
         self.vidas = 3
 
@@ -28,13 +34,13 @@ class Avion:
 
         if (direccion.lower() == "derecha" and
                 self.x < tamaño - tamaño_avion_x):
-            self.x += 1
+            self.x += constantes.AVION_VELOCIDAD
         elif (direccion.lower() == "izquierda" and
               self.x > 0):
-            self.x -= 1
+            self.x -= constantes.AVION_VELOCIDAD
         if (direccion.lower() == "abajo" and
                 self.y < 228 ):
-            self.y += 1
+            self.y += constantes.AVION_VELOCIDAD
         elif (direccion.lower() == "arriba" and
               self.y > 81):
-            self.y -= 1
+            self.y -= constantes.AVION_VELOCIDAD
