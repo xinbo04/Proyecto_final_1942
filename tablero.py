@@ -48,21 +48,25 @@ class Tablero:
             self.avion.mover('arriba', self.alto)
         elif pyxel.btn(pyxel.KEY_DOWN):
             self.avion.mover('abajo', self.alto)
+        elif pyxel.btn(pyxel.KEY_S):
+            self.avion.disparar('True', self.disparar)
+
 
     def __pintar_avion(self):
         pyxel.blt(self.avion.x, self.avion.y, *self.avion.sprite)
+        # cada frame cambia la hélice
         if pyxel.frame_count % 2 == 0:
-            pyxel.blt(self.avion.x+4, self.avion.y+1, *self.avion.helice)
-            pyxel.blt(self.avion.x+14, self.avion.y+1, *self.avion.helice)
+            pyxel.blt(self.avion.x + 4, self.avion.y + 1, *self.avion.helice)
+            pyxel.blt(self.avion.x + 14, self.avion.y + 1, *self.avion.helice)
 
-
-
-
+    def __pintar_disparo(self):
+        pyxel.blt(self.proyectil.x, self.proyectil.y, *self.proyectil.bala)
     '''
     def __pintar_enemigo(self):
         for elemento in self.enemigos:
             pyxel.blt(elemento.x, elemento.y, *elemento.sprite)
     '''
+
     def draw(self):
         """Este código se ejecuta también cada frame, aquí deberías dibujar los
         objetos

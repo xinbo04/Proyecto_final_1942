@@ -13,7 +13,6 @@ class Avion:
         """
         self.x = x
         self.y = y
-
         # Aquí indicamos que la imagen del avión estará en el
         # banco=0, 0,0 a 25,16, colkey=14 #ff9798
         # img, u, v, w, h, [colkey]
@@ -28,7 +27,7 @@ class Avion:
     def mover(self, direccion: str, tamaño: int):
         """Esto es un ejemplo de un método para mover avión horizontalmente.
         Recibe la dirección y el tamaño del tablero"""
-        # Calculamos el ancho  del avión para poder hacer las comprobaciones
+        # Calculamos el ancho del avión para poder hacer las comprobaciones
         # necesarias parar el avión antes de alcanzar el borde derecho
         tamaño_avion_x = self.sprite[3]
         tamaño_avion_y = self.sprite[4]
@@ -39,9 +38,14 @@ class Avion:
         elif (direccion.lower() == "izquierda" and
               self.x > 0):
             self.x -= constantes.AVION_VELOCIDAD
+        # 228 es el límite inferior
         if (direccion.lower() == "abajo" and
-                self.y < 228):
+                self.y < 228 - tamaño_avion_y):
             self.y += constantes.AVION_VELOCIDAD
+        # 81 es el límite superior
         elif (direccion.lower() == "arriba" and
               self.y > 81):
             self.y -= constantes.AVION_VELOCIDAD
+
+    def disparar(self):
+
