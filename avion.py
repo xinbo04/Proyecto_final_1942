@@ -8,8 +8,8 @@ class Avion:
 
     def __init__(self, x: int, y: int):
         """ Este método crea el objeto avión
-        @param x -> la posición x inicial del avión
-        @param y -> la posición y inicial del avión
+        @param x: indica la posición x inicial del avión
+        @param y: indica la posición y inicial del avión
         """
         self.x = x
         self.y = y
