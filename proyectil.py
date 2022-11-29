@@ -8,7 +8,7 @@ class Proyectil:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.sprite = (0, 187, 54, 198, 64)
+        self.sprite = (0, 103, 84, 11, 10, 14)
 
     def mover(self, disparar: bool):
         if disparar:

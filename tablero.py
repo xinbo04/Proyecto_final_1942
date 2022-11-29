@@ -19,10 +19,11 @@ class Tablero:
         # Este bloque inicializa pyxel
         # Lo primero que tenemos que hacer es crear la pantalla, ver la API
         # para más parámetros
-        pyxel.init(self.ancho, self.alto, title="1942", fps=30)
+        pyxel.init(self.ancho, self.alto, title="1942", fps=10)
 
-        # Cargamos los ficheros pyxres que vamos a usar
-        pyxel.load("assets/avion_principal.pyxres")
+        # Cargamos los sprites que vamos a usar
+        pyxel.image(0).load(0, 0, "assets/sprites.png")
+
 
         # Creamos un avión en la mitad de la pantalla en x. En y estará en la
         # posición 200

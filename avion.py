@@ -14,13 +14,13 @@ class Avion:
         self.x = x
         self.y = y
         # Aquí indicamos que la imagen del avión estará en el
-        # banco=0, 0,0 a 25,16, colkey=14 #ff9798
+        # banco=0, posición inicial de tamaño mxn, colkey=14 #ff9798
         # img, u, v, w, h, [colkey]
         lista_sprites = []
-        self.sprite = (0, 0, 0, 25, 16, 14)
+        self.sprite = (0, 5, 6, 25, 16, 14)
         # para la hélice, si ponemos un número negativo se invierte la imagen
         # horizontalmente
-        self.helice = (0, 4, 1, -7, 1)
+        self.helice = (0, 9, 7, -7, 1)
         # Establecemos que tiene tres vidas al principio del juego
         self.vidas = 3
 
