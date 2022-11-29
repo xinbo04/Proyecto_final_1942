@@ -19,7 +19,7 @@ class Tablero:
         # Este bloque inicializa pyxel
         # Lo primero que tenemos que hacer es crear la pantalla, ver la API
         # para más parámetros
-        pyxel.init(self.ancho, self.alto, title="1942", fps=25)
+        pyxel.init(self.ancho, self.alto, title="1942", fps=30)
 
         # Cargamos los ficheros pyxres que vamos a usar
         pyxel.load("assets/avion_principal.pyxres")
@@ -29,6 +29,7 @@ class Tablero:
         # Notad que la imagen indicada en el init de la clase avión (en el
         # sprite), en este ejemplo es un gato
         self.avion = Avion(self.ancho // 2, 200)
+        self.proyectil = Proyectil(self.ancho // 2, 210)
         self.enemigos = []
         for elemento in constantes.ENEMIGOS_INICIAL:
             self.enemigos.append(Enemigo(*elemento))
@@ -61,7 +62,7 @@ class Tablero:
             pyxel.blt(self.avion.x + 14, self.avion.y + 1, *self.avion.helice)
 
     def __pintar_disparo(self):
-        pyxel.blt(self.proyectil.x, self.proyectil.y, *self.proyectil.bala)
+        pyxel.blt(1, 1, *self.proyectil.sprite)
 
     '''
     def __pintar_enemigo(self):
@@ -80,6 +81,7 @@ class Tablero:
         el número del banco de imágenes, la x e y de la imagen en el banco 
         y el tamaño de la imagen"""
         self.__pintar_avion()
+        self.__pintar_disparo()
         '''
         self.__pintar_enemigo()
         '''
