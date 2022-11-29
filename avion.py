@@ -47,5 +47,6 @@ class Avion:
               self.y > 81):
             self.y -= constantes.AVION_VELOCIDAD
 
-    def disparar(self):
+
+
 

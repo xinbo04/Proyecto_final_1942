@@ -2,18 +2,22 @@
 Created by XINBO CHEN CHEN in nov 2022
 Universidad Carlos III de Madrid
 """
+from avion import Avion
 
 
-class Proyectil():
+class Proyectil:
     def __init__(self, x, y):
         self.x = x
         self.y = y
         self.sprite = (0, 187, 54, 198, 64)
 
-
     def mover(self, disparar: bool):
         if disparar:
-
+            x_momento_disparo = self.x
+            y_momento_disparo = self.y
+            self.x = x_momento_disparo
+            self.y = y_momento_disparo
+            self.y += 1
 
 
 '''

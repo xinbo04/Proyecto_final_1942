@@ -1,11 +1,13 @@
-from avion import Avion
-from enemigo import Enemigo
-import constantes
 import pyxel
+
+import constantes
+from avion import Avion
+from proyectil import Proyectil
+from enemigo import Enemigo
 
 
 class Tablero:
-    """Esta clase contiene la información neceraria para
+    """Esta clase contiene la información necesaria para
     representar el tablero"""
 
     def __init__(self, ancho: int, alto: int):
@@ -49,8 +51,7 @@ class Tablero:
         elif pyxel.btn(pyxel.KEY_DOWN):
             self.avion.mover('abajo', self.alto)
         elif pyxel.btn(pyxel.KEY_S):
-            self.avion.disparar('True', self.disparar)
-
+            self.proyectil.mover(True)
 
     def __pintar_avion(self):
         pyxel.blt(self.avion.x, self.avion.y, *self.avion.sprite)
@@ -61,6 +62,7 @@ class Tablero:
 
     def __pintar_disparo(self):
         pyxel.blt(self.proyectil.x, self.proyectil.y, *self.proyectil.bala)
+
     '''
     def __pintar_enemigo(self):
         for elemento in self.enemigos:
