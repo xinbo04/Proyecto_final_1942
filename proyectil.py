@@ -17,29 +17,3 @@ class Proyectil:
             self.x = x_momento_disparo
             self.y = y_momento_disparo
             self.y += 1
-
-
-'''
-    def __str__(self):
-        print('Disparos(x={}, y={}, color={}, afiliacion={self._afiliacion})')
-
-    @property
-    def afiliacion(self):
-        return self.afiliacion
-
-    @property
-    def x(self):
-        return self.x
-
-    @x.setter
-    def x(self, valor):
-        self.x = valor
-
-    @property
-    def y(self):
-        return self.y
-
-    @y.setter
-    def y(self, valor):
-        self.y = valor
-'''
