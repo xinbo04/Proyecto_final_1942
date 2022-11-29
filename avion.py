@@ -40,7 +40,7 @@ class Avion:
             self.x -= constantes.AVION_VELOCIDAD
         # 228 es el límite inferior
         if (direccion.lower() == "abajo" and
-                self.y < 228 - tamaño_avion_y):
+                self.y < 228):
             self.y += constantes.AVION_VELOCIDAD
         # 81 es el límite superior
         elif (direccion.lower() == "arriba" and
