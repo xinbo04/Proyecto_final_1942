@@ -63,7 +63,7 @@ class Tablero:
             pyxel.blt(self.avion.x + 14, self.avion.y + 1, *self.avion.helice)
 
     def __pintar_disparo(self):
-        pyxel.blt(1, 1, *self.proyectil.sprite)
+        pyxel.blt(self.proyectil.x, self.proyectil.y, *self.proyectil.sprite)
 
     '''
     def __pintar_enemigo(self):
