@@ -16,8 +16,8 @@ class Avion:
         # Aquí indicamos que la imagen del avión estará en el
         # banco=0, posición inicial de tamaño mxn, colkey=14 #ff9798
         # img, u, v, w, h, [colkey]
-        lista_sprites = []
-        self.sprite = (0, 5, 6, 25, 16, 14)
+        lista_sprites = [(5, 6, 25, 16)]
+        self.sprite = (0, *lista_sprites[0], 14)
         # para la hélice, si ponemos un número negativo se invierte la imagen
         # horizontalmente
         self.helice = (0, 9, 7, -7, 1)
