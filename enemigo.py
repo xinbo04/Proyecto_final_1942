@@ -3,7 +3,7 @@ Created by XINBO CHEN CHEN in nov 2022
 Universidad Carlos III de Madrid
 """
 import constantes
-
+from proyectil import Proyectil
 
 class Enemigo:
 
@@ -11,7 +11,7 @@ class Enemigo:
         self.x = x
         self.y = y
         self.tipo = tipo
-
+        self.e_disparos=[]
         # Para el sprite tenemos la tupla (banco, x , y, ancho, alto)
         # ESTO ESTÁ HECHO SIN HERENCIA, HAY QUE USAR HERENCIA
         if tipo == "REGULAR":
@@ -22,3 +22,7 @@ class Enemigo:
             self.sprite = constantes.SPRITE_BOMBARDERO
         elif tipo == "SUPERBOMBARDERO":
             self.sprite = constantes.SPRITE_SUPERBOMBARDERO
+
+    def disparar(self):
+        e_disparo=Proyectil(self.x,self.y)
+        self.e_disparos.append(e_disparo)
