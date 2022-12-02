@@ -9,8 +9,8 @@ ALTO = 256
 
 # Avión
 # para lista de sprites
-AVION_SPRITE = ((0, 5, 6, 25, 15, 8),)
-AVION_INICIAL = (ANCHO / 2, 200)
+AVION_SPRITE = (5, 6, 25, 16)
+AVION_INICIAL = (ANCHO // 2, 200)
 # velocidad del avión
 AVION_VELOCIDAD = 5
 

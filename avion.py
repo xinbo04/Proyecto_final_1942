@@ -5,6 +5,7 @@ class Avion:
     """Esta clase almacena la información necesaria para nuestro
     avión. Es muy probable que necesitemos más atributos, aquí mostramos
     los básicos"""
+    
 
     def __init__(self, x: int, y: int):
         """ Este método crea el objeto avión
@@ -16,8 +17,7 @@ class Avion:
         # Aquí indicamos que la imagen del avión estará en el
         # banco=0, posición inicial de tamaño mxn, colkey=14 #ff9798
         # img, u, v, w, h, [colkey]
-        lista_sprites = []
-        self.sprite = (0, 5, 6, 25, 16, 14)
+        self.sprite = (0, *constantes.AVION_SPRITE, 14)
         # para la hélice, si ponemos un número negativo se invierte la imagen
         # horizontalmente
         self.helice = (0, 9, 7, -7, 1)
@@ -30,7 +30,6 @@ class Avion:
         # Calculamos el ancho del avión para poder hacer las comprobaciones
         # necesarias parar el avión antes de alcanzar el borde derecho
         tamaño_avion_x = self.sprite[3]
-        tamaño_avion_y = self.sprite[4]
 
         if (direccion.lower() == "derecha" and
                 self.x < tamaño - tamaño_avion_x):
