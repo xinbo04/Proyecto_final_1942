@@ -23,7 +23,9 @@ class Avion:
         self.helice = (0, 9, 7, -7, 1)
         # Establecemos que tiene tres vidas al principio del juego
         self.vidas = 3
-        self.disparos=[]
+
+
+
     def mover(self, direccion: str, tamaño: int):
         """Esto es un ejemplo de un método para mover avión horizontalmente.
         Recibe la dirección y el tamaño del tablero"""
@@ -45,8 +47,10 @@ class Avion:
         elif (direccion.lower() == "arriba" and
               self.y > 81):
             self.y -= constantes.AVION_VELOCIDAD
+
+
     def disparar(self):
-        disparo= Proyectil (self.x,self.y)
+        disparo = Proyectil (self.x,self.y)
         self.disparos.append(disparo)
 
 

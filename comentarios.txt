@@ -23,6 +23,10 @@ Proyectil:
     sprite
     lista_proyectiles
 
+        
+        
+------------------------
+pyxel.text(60, 30, f"{self.score:5}", 7)
 
-hggjhdggdgjttjt
-ajdkjtqe
+text(x, y, s, col)
+Draw a string s of color col at (x, y).
