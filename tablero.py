@@ -132,6 +132,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
             ):
                 enemy.vivo=False
                 
+                
 
 
 

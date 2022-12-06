@@ -5,4 +5,4 @@ class Mapa:
         self.mapa1 = (0, )
 
     def mover(self):
-        self.y += 1
+        self.y +=1
