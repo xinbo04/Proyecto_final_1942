@@ -1,7 +1,4 @@
-"""
-Created by XINBO CHEN CHEN in nov 2022
-Universidad Carlos III de Madrid
-"""
+
 
 # Módulo que agrupa las constantes que se van a usar en el juego.
 ANCHO = 224
@@ -46,3 +43,5 @@ EXPLOSION=[EXPLOSION1,EXPLOSION2,EXPLOSION3,EXPLOSION4,EXPLOSION5,EXPLOSION6]
 SAME = (70, 5, 10)
 NUMEROS = ((117,81,4,8), (144,79,3,10), (195,*SAME), (204, *SAME), (213, 70, 6, 10), (166,79,5,10), (222, *SAME), (231, *SAME), (240, *SAME), (249, *SAME))
 
+# Mapa
+MAPA = (0, 0, 256, 256)
