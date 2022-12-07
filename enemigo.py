@@ -37,7 +37,7 @@ class Regular(Enemigo):
 
 
     def mover(self, direccion, tamaño):
-        super().mover(self, direccion, tamaño):
+        super().mover(self, direccion, tamaño)
         if self.y<128:
             self.y+=constantes.ENEMIGO_VELOCIDAD
         else:

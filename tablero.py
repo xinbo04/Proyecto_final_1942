@@ -33,12 +33,15 @@ class Tablero:
 Operate the tilemap tm (0-7). (See the Tilemap class)
 bltm(x, y, tm, u, v, w, h, [colkey])
 Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If negative value is set for w and/or h, it will reverse horizontally and/or vertically. If colkey is specified, treated as transparent color. The size of a tile is 8x8 pixels and is stored in a tilemap as a tuple of (tile_x, tile_y)."""
-        pyxel.tilemap(0).load(0, 0, "assets/mapa1.png")
-        pyxel.tilemap(1).load(0, 0, "assets/mapa2.png")
-        pyxel.tilemap(2).load(0, 0, "assets/mapa3.png")
-        pyxel.tilemap(3).load(0, 0, "assets/mapa4.png")
-        pyxel.tilemap(4).load(0, 0, "assets/mapa5.png")
-        pyxel.tilemap(5).load(0, 0, "assets/mapa_agua.png")
+        pyxel.image(0).load(0, 0, "assets/mapa1.png")
+        pyxel.image(1).load(0, 0, "assets/mapa2.png")
+        pyxel.image(2).load(0, 0, "assets/mapa3.png")
+        pyxel.image(0).load(0, 0, "assets/mapa4.png")
+        pyxel.image(4).load(0, 0, "assets/mapa5.png")
+        pyxel.image(5).load(0, 0, "assets/mapa_agua.png")
+
+
+
 
 
 
