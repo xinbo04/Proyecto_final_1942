@@ -62,7 +62,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
 
     def cleanup_list(list):
         a = 0
-        while i < len(list):
+        while a < len(list):
             elem = list[a]
             if not elem.vivo:
                 list.pop(a)
@@ -153,7 +153,8 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
             pyxel.blt(elemento.x, elemento.y, *elemento.sprite)
 
     def __pintar_mapa(self):
-        pyxel.blt
+        pyxel.bltm(0, 0, *self.mapa.sprite_agua)
+        pyxel.bltm(0, self.mapa.y, *self.mapa.sprite)
         
         
 
@@ -171,4 +172,4 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         self.__pintar_avion()
         self.__pintar_disparo()
         self.__pintar_enemigo()
-
+        self.__pintar_mapa()

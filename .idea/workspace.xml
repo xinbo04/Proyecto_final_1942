@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0cbdde01-dccd-4902-a293-868bb6deb677" name="Changes" comment="...">
-      <change afterPath="$PROJECT_DIR$/assets/mapa1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/mapa2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/mapa3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/mapa4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/mapa5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/mapa_agua.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mapa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avion.py" beforeDir="false" afterPath="$PROJECT_DIR$/avion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constantes.py" beforeDir="false" afterPath="$PROJECT_DIR$/constantes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enemigo.py" beforeDir="false" afterPath="$PROJECT_DIR$/enemigo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/explosion.py" beforeDir="false" afterPath="$PROJECT_DIR$/explosion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyectil.py" beforeDir="false" afterPath="$PROJECT_DIR$/proyectil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tablero.py" beforeDir="false" afterPath="$PROJECT_DIR$/tablero.py" afterDir="false" />
-    </list>
+    <list default="true" id="0cbdde01-dccd-4902-a293-868bb6deb677" name="Changes" comment="..." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +9,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
