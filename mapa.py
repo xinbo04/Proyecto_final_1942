@@ -5,7 +5,7 @@ class Mapa:
     def __init__(self, x: int, y: int):
         self.x = x
         self.y = y
-        self.sprite = (2, *constantes.MAPA, 14)
+        self.sprite = (2, *constantes.MAPA, constantes.COLKEY)
 
     def mover(self):
         self.tipo = 0
