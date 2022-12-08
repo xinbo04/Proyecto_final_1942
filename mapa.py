@@ -6,7 +6,6 @@ class Mapa:
         self.x = x
         self.y = y
         self.sprite = (0, *constantes.MAPA, 14)
-        self.sprite_agua = (5,*constantes.MAPA)
 
     def mover(self):
         self.tipo = 0

@@ -9,7 +9,7 @@ class Explosion:
         self.explosion=constantes.EXPLOSION1
 
     def explotar():
-        for i in constantes.EEXPLOSION:
+        for i in constantes.EXPLOSION:
             self.explosion=constantes.EXPLOSION[i]
         
 

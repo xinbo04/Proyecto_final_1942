@@ -33,12 +33,7 @@ class Tablero:
 Operate the tilemap tm (0-7). (See the Tilemap class)
 bltm(x, y, tm, u, v, w, h, [colkey])
 Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If negative value is set for w and/or h, it will reverse horizontally and/or vertically. If colkey is specified, treated as transparent color. The size of a tile is 8x8 pixels and is stored in a tilemap as a tuple of (tile_x, tile_y)."""
-        pyxel.image(0).load(0, 0, "assets/mapa1.png")
-        pyxel.image(1).load(0, 0, "assets/mapa2.png")
-        pyxel.image(2).load(0, 0, "assets/mapa3.png")
-        pyxel.image(0).load(0, 0, "assets/mapa4.png")
-        pyxel.image(4).load(0, 0, "assets/mapa5.png")
-        pyxel.image(5).load(0, 0, "assets/mapa_agua.png")
+        pyxel.image(0).load(0, 640, "assets/MAPA.png")
 
 
 
@@ -55,7 +50,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         self.enemigos = []
         self.proyectiles = []
 
-        for elemento in constantes.ENEMIGOS_INICIAL:
+        for elemento in constantes.SPRITE_ENEMIGO:
             self.enemigos.append(Enemigo(*elemento))
 
         # Ejecutamos el juego
@@ -99,6 +94,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
             self.avion.mover('abajo', self.alto)
         if pyxel.btn(pyxel.KEY_S):
             self.avion.disparar()
+
         for i in self.avion.disparos:
             i.mover(256)
         for enemigo in self.enemigos:
@@ -156,18 +152,15 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
             pyxel.blt(elemento.x, elemento.y, *elemento.sprite)
 
     def __pintar_mapa(self):
-        pyxel.bltm(0, 0, *self.mapa.sprite_agua)
-        pyxel.bltm(0, self.mapa.y, *self.mapa.sprite)
+        pyxel.bltm(0, pyxel.frame_count // 10, *self.mapa.sprite)
         
         
 
     def draw(self):
-        """Este código se ejecuta también cada frame, aquí deberías dibujar los
-        objetos
+        """Este código se ejecuta también cada frame, aquí se dibujan todos los objetos
         """
         pyxel.cls(1)
         
-
         """Dibujamos el avión tomando los valores del objeto avión
         Los parámetros son x, y en la pantalla  y una tupla que contiene: 
         el número del banco de imágenes, la x e y de la imagen en el banco 

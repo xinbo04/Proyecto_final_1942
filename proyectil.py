@@ -8,6 +8,7 @@ class Proyectil:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        
         self.sprite = (0, constantes.PROYECTIL_SPRITE, 14)
         self.sprite_enemigo = (0, constantes.PROYECTIL_ENEMIGO, 14)
 

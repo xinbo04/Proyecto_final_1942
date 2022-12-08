@@ -50,7 +50,7 @@ class Avion:
 
 
     def disparar(self):
-        disparo = Proyectil (self.x,self.y)
+        disparo = Proyectil(self.x,self.y)
         self.disparos.append(disparo)
 
 
