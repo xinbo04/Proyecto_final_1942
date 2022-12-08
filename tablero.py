@@ -34,7 +34,7 @@ class Tablero:
 Operate the tilemap tm (0-7). (See the Tilemap class)
 bltm(x, y, tm, u, v, w, h, [colkey])
 Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If negative value is set for w and/or h, it will reverse horizontally and/or vertically. If colkey is specified, treated as transparent color. The size of a tile is 8x8 pixels and is stored in a tilemap as a tuple of (tile_x, tile_y)."""
-        pyxel.image(2).load(0, 640, "assets/MAPA.png")
+        pyxel.image(2).load(0, 0, "assets/MAPA.png")
 
 
 
@@ -48,7 +48,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         self.avion = Avion(*constantes.AVION_INICIAL)
         self.proyectil = Proyectil(*constantes.AVION_INICIAL)
         self.enemigos = []
-        self.mapa = Mapa(0, 0)
+        self.mapa = Mapa(0, 640)
 
         # Para la posición de los enemigos iniciales
         for elemento in constantes.ENEMIGOS_INICIAL:
@@ -160,7 +160,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
             pyxel.blt(elemento.x, elemento.y, *elemento.sprite)
 
     def __pintar_mapa(self):
-        pyxel.bltm(0, pyxel.frame_count // 10, *self.mapa.sprite)
+        pyxel.blt(0, pyxel.frame_count // 5, *self.mapa.sprite)
         
         
 
@@ -173,7 +173,8 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         Los parámetros son x, y en la pantalla  y una tupla que contiene: 
         el número del banco de imágenes, la x e y de la imagen en el banco 
         y el tamaño de la imagen"""
+        self.__pintar_mapa()
         self.__pintar_avion()
         self.__pintar_disparo()
         self.__pintar_enemigo()
-        self.__pintar_mapa()
+
