@@ -36,7 +36,7 @@ class Avion:
         tamaño_avion_x = self.sprite[3]
 
         if (direccion.lower() == "derecha" and
-                self.x < tamaño - tamaño_avion_x):
+                self.x < 224 - tamaño_avion_x):
             self.x += constantes.AVION_VELOCIDAD
         elif (direccion.lower() == "izquierda" and
               self.x > 0):
