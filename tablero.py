@@ -22,18 +22,19 @@ class Tablero:
         # Este bloque inicializa pyxel
         # Lo primero que tenemos que hacer es crear la pantalla, ver la API
         # para más parámetros
-        pyxel.init(self.ancho, self.alto, title="1942", fps=30)
+        pyxel.init(self.ancho, self.alto, title="1942", fps=20)
 
         # Cargamos los ficheros pyxres que vamos a usar
         pyxel.image(0).load(0, 0, "assets/sprites1.png")
         pyxel.image(1).load(0, 0, "assets/sprites2.png")
+        """
         pyxel.image(2).load(0, 0, "assets/sprites3.png")
-
+        """
         """tilemap(tm)
 Operate the tilemap tm (0-7). (See the Tilemap class)
 bltm(x, y, tm, u, v, w, h, [colkey])
 Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If negative value is set for w and/or h, it will reverse horizontally and/or vertically. If colkey is specified, treated as transparent color. The size of a tile is 8x8 pixels and is stored in a tilemap as a tuple of (tile_x, tile_y)."""
-        """pyxel.image(0).load(0, 640, "assets/MAPA.png")"""
+        pyxel.image(2).load(0, 640, "assets/MAPA.png")
 
 
 
@@ -97,7 +98,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         if pyxel.btn(pyxel.KEY_S):
             self.avion.disparar()
         for bala in self.avion.disparos:
-            bala.mover(256)
+            bala.mover(self.alto)
             """
         for enemigo in self.enemigos:
             enemigo.mover()
@@ -143,6 +144,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         pyxel.blt(self.avion.x, self.avion.y, *self.avion.sprite)
         # cada frame cambia la hélice
         if pyxel.frame_count % 2 == 0:
+            # con ajuste de píxeles
             # mitad izquierda de la hélice
             pyxel.blt(self.avion.x + 4, self.avion.y + 1, *self.avion.helice)
             # mitad derecha
@@ -150,7 +152,8 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
 
     def __pintar_disparo(self):
         for bala in self.avion.disparos:
-            pyxel.blt(bala.x, bala.y, *bala.sprite)
+            # con ajuste de píxeles para que quede centrado
+            pyxel.blt(bala.x + 7, bala.y - 2, *bala.sprite)
 
     def __pintar_enemigo(self):
         for elemento in self.enemigos:
