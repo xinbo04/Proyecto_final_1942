@@ -33,7 +33,7 @@ class Tablero:
 Operate the tilemap tm (0-7). (See the Tilemap class)
 bltm(x, y, tm, u, v, w, h, [colkey])
 Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If negative value is set for w and/or h, it will reverse horizontally and/or vertically. If colkey is specified, treated as transparent color. The size of a tile is 8x8 pixels and is stored in a tilemap as a tuple of (tile_x, tile_y)."""
-        pyxel.image(0).load(0, 640, "assets/MAPA.png")
+        """pyxel.image(0).load(0, 640, "assets/MAPA.png")"""
 
 
 
@@ -44,14 +44,15 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         # posición 200
         # Notad que la imagen indicada en el init de la clase avión (en el
         # sprite), en este ejemplo es un gato
-        self.avion = Avion(self.ancho // 2, 200)
-        self.enemigo = Enemigo(self.ancho // 2, 20)
-        self.proyectil = Proyectil(self.ancho // 2, 200)
+        self.avion = Avion(*constantes.AVION_INICIAL)
+        self.proyectil = Proyectil(*constantes.AVION_INICIAL)
         self.enemigos = []
-        self.proyectiles = []
+        self.mapa = Mapa(0, 0)
 
-        for elemento in constantes.SPRITE_ENEMIGO:
-            self.enemigos.append(Enemigo(*elemento))
+        # Para la posición de los enemigos iniciales
+        for elemento in constantes.ENEMIGOS_INICIAL:
+            enemigo = Enemigo(*elemento)
+            self.enemigos.append(enemigo)
 
         # Ejecutamos el juego
         pyxel.run(self.update, self.draw)
@@ -83,7 +84,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         los métodos que se actualizan los  diferentes objetos"""
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
-        # Solo hacemos el movimiento horizontal del avión
+        # Movimiento del avión
         elif pyxel.btn(pyxel.KEY_RIGHT):
             self.avion.mover('derecha', self.ancho)
         elif pyxel.btn(pyxel.KEY_LEFT):
@@ -92,15 +93,17 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
             self.avion.mover('arriba', self.alto)
         elif pyxel.btn(pyxel.KEY_DOWN):
             self.avion.mover('abajo', self.alto)
+        # Disparo del avión
         if pyxel.btn(pyxel.KEY_S):
             self.avion.disparar()
-
-        for i in self.avion.disparos:
-            i.mover(256)
+        for bala in self.avion.disparos:
+            bala.mover(256)
+            """
         for enemigo in self.enemigos:
             enemigo.mover()
         for j in self.enemigo.e_disparos:
             j.mover
+            """
             
     def eliminar(self):
         if self.enemigo==Regular:
@@ -140,12 +143,14 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         pyxel.blt(self.avion.x, self.avion.y, *self.avion.sprite)
         # cada frame cambia la hélice
         if pyxel.frame_count % 2 == 0:
+            # mitad izquierda de la hélice
             pyxel.blt(self.avion.x + 4, self.avion.y + 1, *self.avion.helice)
+            # mitad derecha
             pyxel.blt(self.avion.x + 14, self.avion.y + 1, *self.avion.helice)
 
     def __pintar_disparo(self):
-        for i in self.avion.disparos:
-            pyxel.blt(i.x, i.y, *i.sprite)
+        for bala in self.avion.disparos:
+            pyxel.blt(bala.x, bala.y, *bala.sprite)
 
     def __pintar_enemigo(self):
         for elemento in self.enemigos:

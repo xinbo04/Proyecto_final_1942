@@ -15,10 +15,9 @@ class Enemigo:
         self.x = x
         self.y = y
         self.e_disparos = []
-        self.enemigos = []
         self.e_explosiones= []
         self.vivo=True
-        self.sprite = ()
+        self.sprite = (0, *constantes.SPRITE_REGULAR, constantes.COLKEY)
         # Para el sprite tenemos la tupla (banco, x , y, ancho, alto)
     def mover(self, direccion, tamaño):
         self.x += 1
@@ -33,7 +32,7 @@ class Enemigo:
 class Regular(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.sprite = (0, constantes.SPRITE_REGULAR, 14)
+        self.sprite = (0, *constantes.SPRITE_REGULAR, constantes.COLKEY)
 
 
     def mover(self, direccion, tamaño):
@@ -47,7 +46,7 @@ class Regular(Enemigo):
 class Rojo(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.sprite = (1, constantes.SPRITE_ROJO, 14)
+        self.sprite = (1, *constantes.SPRITE_ROJO, constantes.COLKEY)
     def mover(self, direccion, tamaño):
         super().mover(direccion, tamaño)
         self.x+=constantes.ENEMIGO_VELOCIDAD
@@ -80,11 +79,11 @@ class Rojo(Enemigo):
 class Bombardero(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.sprite = (1, constantes.SPRITE_BOMBARDERO, 14)
+        self.sprite = (1, *constantes.SPRITE_BOMBARDERO, constantes.COLKEY)
 
 
 class Superbombardero(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.sprite = (1, constantes.SPRITE_SUPERBOMBARDERO, 14)
+        self.sprite = (1, *constantes.SPRITE_SUPERBOMBARDERO, constantes.COLKEY)
 

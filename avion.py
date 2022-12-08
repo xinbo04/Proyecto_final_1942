@@ -17,12 +17,14 @@ class Avion:
         # Aquí indicamos que la imagen del avión estará en el
         # banco=0, posición inicial de tamaño mxn, colkey=14 #ff9798
         # img, u, v, w, h, [colkey]
-        self.sprite = (0, *constantes.AVION_SPRITE, 14)
+        self.sprite = (0, *constantes.AVION_SPRITE, constantes.COLKEY)
         # para la hélice, si ponemos un número negativo se invierte la imagen
         # horizontalmente
         self.helice = (0, 9, 7, -7, 1)
         # Establecemos que tiene tres vidas al principio del juego
+        self.disparos = []
         self.vidas = 3
+
 
 
 
@@ -50,10 +52,7 @@ class Avion:
 
 
     def disparar(self):
-        disparo = Proyectil(self.x,self.y)
+        disparo = Proyectil(self.x, self.y)
         self.disparos.append(disparo)
-
-
-
 
 

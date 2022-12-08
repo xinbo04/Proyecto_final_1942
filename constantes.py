@@ -4,9 +4,12 @@
 ANCHO = 224
 ALTO = 256
 
+#COLKEY
+COLKEY = 14
+
 # Avión
 # para lista de sprites
-AVION_SPRITE = (5, 6, 25, 15)
+AVION_SPRITE = (5, 6, 25, 16)
 AVION_INICIAL = (ANCHO // 2, 200)
 # velocidad del avión
 AVION_VELOCIDAD = 5
@@ -26,9 +29,7 @@ SPRITE_ROJO = (0, 0, 15, 15)
 SPRITE_BOMBARDERO = (0, 196, 31, 23)
 SPRITE_SUPERBOMBARDERO = (0, 61, 63, 48)
 SPRITE_ENEMIGOS = (SPRITE_REGULAR, SPRITE_ROJO, SPRITE_BOMBARDERO, SPRITE_SUPERBOMBARDERO)
-ENEMIGOS_INICIAL = ((20, 0, "REGULAR"), (50, 0, "ROJO"), (100, 0,
-                                                          "BOMBARDERO"),
-                    (200, 80, "SUPERBOMBARDERO"))
+ENEMIGOS_INICIAL = ((20, 0), (50, 0), (100, 0), (200, 80))
 # Explosion
 EXPLOSION1 = (223, 12, 12, 11)
 EXPLOSION2 = (240, 12, 14, 12)
