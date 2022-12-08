@@ -9,8 +9,8 @@ class Proyectil:
         self.x = x
         self.y = y
         
-        self.sprite = (0, *constantes.PROYECTIL_SPRITE, 14)
-        self.sprite_enemigo = (0, *constantes.PROYECTIL_ENEMIGO, 14)
+        self.sprite = (0, *constantes.PROYECTIL_SPRITE, constantes.COLKEY)
+        self.sprite_enemigo = (0, *constantes.PROYECTIL_ENEMIGO, constantes.COLKEY)
 
     def mover(self, altura: int):
         if self.y < altura:
