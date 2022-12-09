@@ -5,4 +5,4 @@ Universidad Carlos III de Madrid
 
 class Puntuacion:
     def __init__(self, puntuacion):
-        self.puntuacion = puntuacion
+        self.puntos = puntuacion
