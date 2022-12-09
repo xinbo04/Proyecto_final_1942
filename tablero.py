@@ -34,7 +34,6 @@ class Tablero:
 Operate the tilemap tm (0-7). (See the Tilemap class)
 bltm(x, y, tm, u, v, w, h, [colkey])
 Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If negative value is set for w and/or h, it will reverse horizontally and/or vertically. If colkey is specified, treated as transparent color. The size of a tile is 8x8 pixels and is stored in a tilemap as a tuple of (tile_x, tile_y)."""
-        pyxel.image(2).load(0, 0, "assets/MAPA.png")
 
 
 
@@ -48,11 +47,12 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         self.avion = Avion(*constantes.AVION_INICIAL)
         self.proyectil = Proyectil(*constantes.AVION_INICIAL)
         self.enemigos = []
-        self.mapa = Mapa(0, 640)
+        self.mapa = Mapa(0, 0)
+        self.puntuacion = Puntuacion(0)
 
         # Para la posición de los enemigos iniciales
         for elemento in constantes.ENEMIGOS_INICIAL:
-            enemigo = Enemigo(*elemento)
+            enemigo = Regular(*elemento)
             self.enemigos.append(enemigo)
 
         # Ejecutamos el juego
@@ -83,8 +83,12 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
     def update(self):
         """Este código se ejecuta cada frame, aquí invocamos
         los métodos que se actualizan los  diferentes objetos"""
+        #importa el mapa y cada frame va subiendo la imagen (-1280 para la zona inferior)
+        pyxel.image(2).load(0, -1280 + pyxel.frame_count, "assets/MAPA.png")
+
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
+
         # Movimiento del avión
         elif pyxel.btn(pyxel.KEY_RIGHT):
             self.avion.mover('derecha', self.ancho)
@@ -94,8 +98,13 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
             self.avion.mover('arriba', self.alto)
         elif pyxel.btn(pyxel.KEY_DOWN):
             self.avion.mover('abajo', self.alto)
+
+        # Movimiento de los enemigos
+        for enemigo in range(len(self.enemigos)):
+            self.enemigos[enemigo].mover()
+
         # Disparo del avión
-        if pyxel.btn(pyxel.KEY_S):
+        if pyxel.btnp(pyxel.KEY_S, 0, 0):
             self.avion.disparar()
         for bala in self.avion.disparos:
             bala.mover(self.alto)
@@ -105,6 +114,12 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         for j in self.enemigo.e_disparos:
             j.mover
             """
+        # Disparo de los enemigos
+        for i in range(len(self.enemigos)):
+            if pyxel.btnp(pyxel.KEY_F, 0, 0):
+                self.enemigos[i].disparar()
+            for bala in self.enemigos[i].e_disparos:
+                bala.mover_enemigo()
             
     def eliminar(self):
         if self.enemigo==Regular:
@@ -116,6 +131,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         if self.enemigo==Superbombardero:
             tipo = 3
 
+        #colision
         for enemy in self.enemigo.enemigos:
             for balas in self.avion.disparos:
                 if (enemy.x + constantes.SPRITE_ENEMIGO[tipo][2]  > balas.x
@@ -155,14 +171,30 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
             # con ajuste de píxeles para que quede centrado
             pyxel.blt(bala.x + 7, bala.y - 2, *bala.sprite)
 
+    def __pintar_e_disparo(self):
+        for enemigo in range(len(self.enemigos)):
+            for bala in self.enemigos[enemigo].e_disparos:
+                pyxel.blt(bala.x, bala.y, *bala.sprite_enemigo)
+
+
     def __pintar_enemigo(self):
         for elemento in self.enemigos:
             pyxel.blt(elemento.x, elemento.y, *elemento.sprite)
 
     def __pintar_mapa(self):
-        pyxel.blt(0, pyxel.frame_count // 5, *self.mapa.sprite)
+        pyxel.blt(0, 0, *self.mapa.sprite)
         
         
+    def __pintar_hud(self):
+        """Este método sirve para pintar el hud (Head-Up Display o la barra de estado en español), por ejemplo la puntuación, las vidas..."""
+        # P untuación actual (con sombra del texto)
+        pyxel.text(35, 20, f"{self.puntuacion.puntos}", 0)
+        pyxel.text(34, 19, f"{self.puntuacion.puntos}", 5)
+        # Vidas del avión
+        for vida in range(self.avion.vidas):
+            # los valores 5 y 12 son píxeles de margen
+            pyxel.circ(5 + vida * 12, *constantes.VIDAS)
+
 
     def draw(self):
         """Este código se ejecuta también cada frame, aquí se dibujan todos los objetos
@@ -177,4 +209,6 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         self.__pintar_avion()
         self.__pintar_disparo()
         self.__pintar_enemigo()
+        self.__pintar_hud()
+        self.__pintar_e_disparo()
 

@@ -17,5 +17,12 @@ class Proyectil:
             self.y-=7
 
     def mover_enemigo(self):
-        self.y+=random.randint(4,5)
+        self.y+=4
         self.x+=random.randint(-2,2)
+        
+    def s_bombardero(self):
+        self.y+=4
+        self.x-=2
+    def s_bombardero2(self):
+        self.y+=4
+        self.x+=2
