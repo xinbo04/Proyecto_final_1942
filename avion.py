@@ -24,6 +24,9 @@ class Avion:
         # Establecemos que tiene tres vidas al principio del juego
         self.disparos = []
         self.vidas = 3
+        self.loops = 3
+        # Variable booleana para el loop del avión
+        self.pulsado = False
 
 
 
@@ -51,8 +54,9 @@ class Avion:
             self.y -= constantes.AVION_VELOCIDAD
 
 
-    def disparar(self):
-        disparo = Proyectil(self.x, self.y)
-        self.disparos.append(disparo)
+    def disparar(self, pulsado: bool):
+        if not pulsado:
+            disparo = Proyectil(self.x, self.y)
+            self.disparos.append(disparo)
 
 

@@ -49,6 +49,8 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         self.enemigos = []
         self.mapa = Mapa(0, 0)
         self.puntuacion = Puntuacion(0)
+        # variable contador que nos ayuda para el loop del avión
+        self.pos = 0
 
         # Para la posición de los enemigos iniciales
         for elemento in constantes.ENEMIGOS_INICIAL:
@@ -99,13 +101,19 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         elif pyxel.btn(pyxel.KEY_DOWN):
             self.avion.mover('abajo', self.alto)
 
+        # Loop del avión
+        if pyxel.btnp(pyxel.KEY_Z, 0, 0) and self.avion.loops > 0:
+            self.avion.pulsado = True
+
+
+
         # Movimiento de los enemigos
         for enemigo in range(len(self.enemigos)):
             self.enemigos[enemigo].mover()
 
         # Disparo del avión
         if pyxel.btnp(pyxel.KEY_S, 0, 0):
-            self.avion.disparar()
+            self.avion.disparar(self.avion.pulsado)
         for bala in self.avion.disparos:
             bala.mover(self.alto)
             """
@@ -156,15 +164,25 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
 
 
 
-    def __pintar_avion(self):
-        pyxel.blt(self.avion.x, self.avion.y, *self.avion.sprite)
-        # cada frame cambia la hélice
-        if pyxel.frame_count % 2 == 0:
-            # con ajuste de píxeles
-            # mitad izquierda de la hélice
-            pyxel.blt(self.avion.x + 4, self.avion.y + 1, *self.avion.helice)
-            # mitad derecha
-            pyxel.blt(self.avion.x + 14, self.avion.y + 1, *self.avion.helice)
+    def __pintar_avion(self, pulsado: bool):
+        if not pulsado:
+            pyxel.blt(self.avion.x, self.avion.y, *self.avion.sprite)
+            # cada frame cambia la hélice
+            if pyxel.frame_count % 2 == 0:
+                # con ajuste de píxeles
+                # mitad izquierda de la hélice
+                pyxel.blt(self.avion.x + 4, self.avion.y + 1, *self.avion.helice)
+                # mitad derecha
+                pyxel.blt(self.avion.x + 14, self.avion.y + 1, *self.avion.helice)
+        else:
+            loop_avion = (self.avion.x, self.avion.y, 0, *constantes.AVION_SPRITES_LOOP[self.pos], constantes.COLKEY)
+            pyxel.blt(*loop_avion)
+            if pyxel.frame_count % 4 == 0:
+                self.pos += 1
+                if self.pos == len(constantes.AVION_SPRITES_LOOP) - 1:
+                    self.avion.pulsado = False
+                    self.pos = 0
+                    self.avion.loops -= 1
 
     def __pintar_disparo(self):
         for bala in self.avion.disparos:
@@ -192,8 +210,15 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         pyxel.text(34, 19, f"{self.puntuacion.puntos}", 5)
         # Vidas del avión
         for vida in range(self.avion.vidas):
+            # circ(x, y, r, col)
             # los valores 5 y 12 son píxeles de margen
-            pyxel.circ(5 + vida * 12, *constantes.VIDAS)
+            pyxel.circ(10 + vida * 12, 246, 4, 8)
+            pyxel.circ(10 + vida * 12, 246, 3, 2)
+        # Loops restantes
+        for loop in range(self.avion.loops):
+            # rect(x, y, w, h, col)
+            pyxel.rect(210 - loop * 12, 240, 8, 8, 4)
+            pyxel.rect(211 - loop * 12, 241, 6, 6, 9)
 
 
     def draw(self):
@@ -206,7 +231,7 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         el número del banco de imágenes, la x e y de la imagen en el banco 
         y el tamaño de la imagen"""
         self.__pintar_mapa()
-        self.__pintar_avion()
+        self.__pintar_avion(self.avion.pulsado)
         self.__pintar_disparo()
         self.__pintar_enemigo()
         self.__pintar_hud()
