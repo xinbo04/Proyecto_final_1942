@@ -22,7 +22,7 @@ class Tablero:
         # Este bloque inicializa pyxel
         # Lo primero que tenemos que hacer es crear la pantalla, ver la API
         # para más parámetros
-        pyxel.init(self.ancho, self.alto, title="1942", fps=20)
+        pyxel.init(self.ancho, self.alto, title="1942", fps=25)
 
         # Cargamos los ficheros pyxres que vamos a usar
         pyxel.image(0).load(0, 0, "assets/sprites1.png")
@@ -39,20 +39,24 @@ class Tablero:
         self.proyectil = Proyectil(*constantes.AVION_INICIAL)
         self.enemigos = []
         self.mapa = Mapa(0, 0)
-        self.explosionnes=[]
+        self.explosionnes = []
         self.puntuacion = Puntuacion(0)
-        self.enemigo = Enemigo(0, 0)
         # variable contador que nos ayuda para el loop del avión
+        self.enemigo1 = Regular(*constantes.ENEM_POS_INICIAL[0])
+        self.enemigo2 = Rojo(*constantes.ENEM_POS_INICIAL[1])
+        self.enemigo3 = Bombardero(*constantes.ENEM_POS_INICIAL[2])
+        self.enemigo4 = Superbombardero(*constantes.ENEM_POS_INICIAL[3])
+        self.enemigos.append(self.enemigo1)
+        self.enemigos.append(self.enemigo2)
+        self.enemigos.append(self.enemigo3)
+        self.enemigos.append(self.enemigo4)
+
         self.pos = 0
-
-        
-
 
         # Ejecutamos el juego
         pyxel.run(self.update, self.draw)
 
-
-    def cleanup_list(list):
+    def cleanup_list(lista : list):
         a = 0
         while a < len(list):
             elem = list[a]
@@ -60,6 +64,7 @@ class Tablero:
                 list.pop(a)
             else:
                 a += 1
+
     def update_list(list):
         for elem in list:
             elem.update()
@@ -68,13 +73,11 @@ class Tablero:
         for elem in list:
             elem.draw()
 
-
     def update(self):
         """Este código se ejecuta cada frame, aquí invocamos
         los métodos que se actualizan los  diferentes objetos"""
-        #importa el mapa y cada frame va subiendo la imagen (-1280 para la zona inferior)
+        # importa el mapa y cada frame va subiendo la imagen (-1280 para la zona inferior)
         pyxel.image(2).load(0, -1280 + pyxel.frame_count, "assets/MAPA.png")
-
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
 
@@ -108,114 +111,97 @@ class Tablero:
                 self.enemigos[i].disparar()
             for bala in self.enemigos[i].e_disparos:
                 bala.mover_enemigo()
-        
-
-        # Pinta el enemigo
-        if pyxel.frame_count % 20 == 0:
-            self.enemigo = Regular(*constantes.ENEM_POS_INICIAL)
-        if pyxel.frame_count % 80 == 0:
-            self.enemigo = Rojo(*constantes.ENEM_POS_INICIAL)
-        if pyxel.frame_count % 200 == 0:
-            self.enemigo = Bombardero(*constantes.ENEM_POS_INICIAL)
-        if pyxel.frame_count % 500 == 0:
-            self.enemigo = Superbombardero(*constantes.ENEM_POS_INICIAL)
-        self.enemigos.append(self.enemigo)
-
 
     def eliminar(self):
-        #colision
+        # colision
         for enemy in self.enemigo.enemigos:
             for balas in self.avion.disparos:
                 if (enemy.x + constantes.SPRITE_ENEMIGOS[1][2] > balas.x
-                    and balas.x + 11 > enemy.x
-                    and enemy.y + constantes.SPRITE_ENEMIGOS[1][3] > balas.y
-                    and balas.y + 10 > enemy.y
+                        and balas.x + 11 > enemy.x
+                        and enemy.y + constantes.SPRITE_ENEMIGOS[1][3] > balas.y
+                        and balas.y + 10 > enemy.y
                 ):
-                    enemy.vivo=False
-                    balas.vivo=False
-                    self.explosionnes.append(Explosion(enemy.x,enemy.y))
-                    self.puntuacion+=10
+                    enemy.vivo = False
+                    balas.vivo = False
+                    self.explosionnes.append(Explosion(enemy.x, enemy.y))
+                    self.puntuacion += 10
         for enemy in self.enemigo.enemigos:
             if (self.player.x + 25 > enemy.x
-                and enemy.x + constantes.SPRITE_ENEMIGOS[1][2]> self.player.x
-                and self.player.y + 15 > enemy.y
-                and enemy.y + constantes.SPRITE_ENEMIGOS[1][3] > self.player.y
+                    and enemy.x + constantes.SPRITE_ENEMIGOS[1][2] > self.player.x
+                    and self.player.y + 15 > enemy.y
+                    and enemy.y + constantes.SPRITE_ENEMIGOS[1][3] > self.player.y
             ):
-                enemy.vivo=False
-                self.explosionnes.append(Explosion(enemy.x,enemy.y))
-                self.explosionnes.append(Explosion(self.avion.x,self.avion.y))
-                self.avion.vidas-=1
-
+                enemy.vivo = False
+                self.explosionnes.append(Explosion(enemy.x, enemy.y))
+                self.explosionnes.append(Explosion(self.avion.x, self.avion.y))
+                self.avion.vidas -= 1
 
         for enemy in self.enemigo.enemigos:
             for balas in self.avion.disparos:
                 if (enemy.x + constantes.SPRITE_ENEMIGOS[2][2] > balas.x
-                    and balas.x + 11 > enemy.x
-                    and enemy.y + constantes.SPRITE_ENEMIGOS[2][3] > balas.y
-                    and balas.y + 10 > enemy.y
+                        and balas.x + 11 > enemy.x
+                        and enemy.y + constantes.SPRITE_ENEMIGOS[2][3] > balas.y
+                        and balas.y + 10 > enemy.y
                 ):
-                    enemy.vivo=False
-                    balas.vivo=False
-                    self.explosionnes.append(Explosion(enemy.x,enemy.y))
-                    self.puntuacion+=10
+                    enemy.vivo = False
+                    balas.vivo = False
+                    self.explosionnes.append(Explosion(enemy.x, enemy.y))
+                    self.puntuacion += 10
         for enemy in self.enemigo.enemigos:
             if (self.player.x + 25 > enemy.x
-                and enemy.x + constantes.SPRITE_ENEMIGOS[2][2]> self.player.x
-                and self.player.y + 15 > enemy.y
-                and enemy.y + constantes.SPRITE_ENEMIGOS[2][3] > self.player.y
+                    and enemy.x + constantes.SPRITE_ENEMIGOS[2][2] > self.player.x
+                    and self.player.y + 15 > enemy.y
+                    and enemy.y + constantes.SPRITE_ENEMIGOS[2][3] > self.player.y
             ):
-                enemy.vivo=False
-                self.explosionnes.append(Explosion(enemy.x,enemy.y ))
-                self.explosionnes.append(Explosion(self.avion.x,self.avion.y))
-                self.avion.vidas-=1
-
+                enemy.vivo = False
+                self.explosionnes.append(Explosion(enemy.x, enemy.y))
+                self.explosionnes.append(Explosion(self.avion.x, self.avion.y))
+                self.avion.vidas -= 1
 
         for enemy in self.enemigo.enemigos:
             for balas in self.avion.disparos:
                 if (enemy.x + constantes.SPRITE_ENEMIGOS[3][2] > balas.x
-                    and balas.x + 11 > enemy.x
-                    and enemy.y + constantes.SPRITE_ENEMIGOS[3][3] > balas.y
-                    and balas.y + 10 > enemy.y
+                        and balas.x + 11 > enemy.x
+                        and enemy.y + constantes.SPRITE_ENEMIGOS[3][3] > balas.y
+                        and balas.y + 10 > enemy.y
                 ):
-                    enemy.vivo=False
-                    balas.vivo=False
-                    self.explosionnes.append(Explosion(enemy.x,enemy.y))
-                    self.puntuacion+=10
-                    
+                    enemy.vivo = False
+                    balas.vivo = False
+                    self.explosionnes.append(Explosion(enemy.x, enemy.y))
+                    self.puntuacion += 10
+
         for enemy in self.enemigo.enemigos:
             if (self.player.x + 25 > enemy.x
-                and enemy.x + constantes.SPRITE_ENEMIGOS[3][2]> self.player.x
-                and self.player.y + 15 > enemy.y
-                and enemy.y + constantes.SPRITE_ENEMIGOS[3][3] > self.player.y
+                    and enemy.x + constantes.SPRITE_ENEMIGOS[3][2] > self.player.x
+                    and self.player.y + 15 > enemy.y
+                    and enemy.y + constantes.SPRITE_ENEMIGOS[3][3] > self.player.y
             ):
-                enemy.vivo=False        
-                self.explosionnes.append(Explosion(enemy.x,enemy.y))
+                enemy.vivo = False
+                self.explosionnes.append(Explosion(enemy.x, enemy.y))
 
-                self.avion.vidas-=1
+                self.avion.vidas -= 1
 
         for enemy in self.enemigo.enemigos:
             for balas in self.avion.disparos:
                 if (enemy.x + constantes.SPRITE_ENEMIGOS[4][2] > balas.x
-                    and balas.x + 11 > enemy.x
-                    and enemy.y + constantes.SPRITE_ENEMIGOS[4][3] > balas.y
-                    and balas.y + 10 > enemy.y
+                        and balas.x + 11 > enemy.x
+                        and enemy.y + constantes.SPRITE_ENEMIGOS[4][3] > balas.y
+                        and balas.y + 10 > enemy.y
                 ):
-                    enemy.vivo=False
-                    balas.vivo=False
-                    self.explosionnes.append(Explosion(enemy.x,enemy.y))
-                    self.puntuacion+=10
+                    enemy.vivo = False
+                    balas.vivo = False
+                    self.explosionnes.append(Explosion(enemy.x, enemy.y))
+                    self.puntuacion += 10
         for enemy in self.enemigo.enemigos:
             if (self.player.x + 25 > enemy.x
-                and enemy.x + constantes.SPRITE_ENEMIGOS[4][2]> self.player.x
-                and self.player.y + 15 > enemy.y
-                and enemy.y + constantes.SPRITE_ENEMIGOS[4][3] > self.player.y
+                    and enemy.x + constantes.SPRITE_ENEMIGOS[4][2] > self.player.x
+                    and self.player.y + 15 > enemy.y
+                    and enemy.y + constantes.SPRITE_ENEMIGOS[4][3] > self.player.y
             ):
-                enemy.vivo=False        
-                self.explosionnes.append(Explosion(enemy.x,enemy.y))
+                enemy.vivo = False
+                self.explosionnes.append(Explosion(enemy.x, enemy.y))
 
-                self.avion.vidas-=1
-                
-    
+                self.avion.vidas -= 1
 
     def __pintar_avion(self, pulsado: bool):
         if not pulsado:
@@ -247,17 +233,13 @@ class Tablero:
             for bala in self.enemigos[enemigo].e_disparos:
                 pyxel.blt(bala.x, bala.y, *bala.sprite_enemigo)
 
-
     def __pintar_enemigo(self):
         for elemento in self.enemigos:
             pyxel.blt(elemento.x, elemento.y, *elemento.sprite)
-            
-        
 
     def __pintar_mapa(self):
         pyxel.blt(0, 0, *self.mapa.sprite)
-        
-        
+
     def __pintar_hud(self):
         """Este método sirve para pintar el hud (Head-Up Display o la barra de estado en español), por ejemplo la puntuación, las vidas..."""
         # P untuación actual (con sombra del texto)
@@ -275,12 +257,11 @@ class Tablero:
             pyxel.rect(210 - loop * 12, 240, 8, 8, 4)
             pyxel.rect(211 - loop * 12, 241, 6, 6, 9)
 
-
     def draw(self):
         """Este código se ejecuta también cada frame, aquí se dibujan todos los objetos
         """
         pyxel.cls(1)
-        
+
         """Dibujamos el avión tomando los valores del objeto avión
         Los parámetros son x, y en la pantalla  y una tupla que contiene: 
         el número del banco de imágenes, la x e y de la imagen en el banco 
@@ -291,4 +272,3 @@ class Tablero:
         self.__pintar_enemigo()
         self.__pintar_hud()
         self.__pintar_e_disparo()
-
