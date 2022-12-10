@@ -1,5 +1,5 @@
 import pyxel
-
+import random
 import constantes
 from avion import Avion
 from proyectil import Proyectil
@@ -30,15 +30,6 @@ class Tablero:
         """
         pyxel.image(2).load(0, 0, "assets/sprites3.png")
         """
-        """tilemap(tm)
-Operate the tilemap tm (0-7). (See the Tilemap class)
-bltm(x, y, tm, u, v, w, h, [colkey])
-Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If negative value is set for w and/or h, it will reverse horizontally and/or vertically. If colkey is specified, treated as transparent color. The size of a tile is 8x8 pixels and is stored in a tilemap as a tuple of (tile_x, tile_y)."""
-
-
-
-
-
 
         # Creamos un avión en la mitad de la pantalla en x. En y estará en la
         # posición 200
@@ -48,18 +39,17 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         self.proyectil = Proyectil(*constantes.AVION_INICIAL)
         self.enemigos = []
         self.mapa = Mapa(0, 0)
+        self.explosionnes=[]
         self.puntuacion = Puntuacion(0)
+        self.enemigo = Enemigo(0, 0)
         # variable contador que nos ayuda para el loop del avión
         self.pos = 0
 
-        # Para la posición de los enemigos iniciales
-        for elemento in constantes.ENEMIGOS_INICIAL:
-            enemigo = Regular(*elemento)
-            self.enemigos.append(enemigo)
+        
+
 
         # Ejecutamos el juego
         pyxel.run(self.update, self.draw)
-
 
 
     def cleanup_list(list):
@@ -70,12 +60,9 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
                 list.pop(a)
             else:
                 a += 1
-
-
     def update_list(list):
         for elem in list:
             elem.update()
-
 
     def draw_list(list):
         for elem in list:
@@ -105,8 +92,6 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
         if pyxel.btnp(pyxel.KEY_Z, 0, 0) and self.avion.loops > 0:
             self.avion.pulsado = True
 
-
-
         # Movimiento de los enemigos
         for enemigo in range(len(self.enemigos)):
             self.enemigos[enemigo].mover()
@@ -116,53 +101,121 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
             self.avion.disparar(self.avion.pulsado)
         for bala in self.avion.disparos:
             bala.mover(self.alto)
-            """
-        for enemigo in self.enemigos:
-            enemigo.mover()
-        for j in self.enemigo.e_disparos:
-            j.mover
-            """
+
         # Disparo de los enemigos
         for i in range(len(self.enemigos)):
-            if pyxel.btnp(pyxel.KEY_F, 0, 0):
+            if pyxel.frame_count % 10 == 0: 
                 self.enemigos[i].disparar()
             for bala in self.enemigos[i].e_disparos:
                 bala.mover_enemigo()
-            
-    def eliminar(self):
-        if self.enemigo==Regular:
-            tipo = 0
-        if self.enemigo==Rojo:
-            tipo = 1
-        if self.enemigo==Bombardero:
-            tipo = 2
-        if self.enemigo==Superbombardero:
-            tipo = 3
+        
 
+        # Pinta el enemigo
+        if pyxel.frame_count % 20 == 0:
+            self.enemigo = Regular(*constantes.ENEM_POS_INICIAL)
+        if pyxel.frame_count % 80 == 0:
+            self.enemigo = Rojo(*constantes.ENEM_POS_INICIAL)
+        if pyxel.frame_count % 200 == 0:
+            self.enemigo = Bombardero(*constantes.ENEM_POS_INICIAL)
+        if pyxel.frame_count % 500 == 0:
+            self.enemigo = Superbombardero(*constantes.ENEM_POS_INICIAL)
+        self.enemigos.append(self.enemigo)
+
+
+    def eliminar(self):
         #colision
         for enemy in self.enemigo.enemigos:
             for balas in self.avion.disparos:
-                if (enemy.x + constantes.SPRITE_ENEMIGO[tipo][2]  > balas.x
+                if (enemy.x + constantes.SPRITE_ENEMIGOS[1][2] > balas.x
                     and balas.x + 11 > enemy.x
-                    and enemy.y + constantes.SPRITE_ENEMIGO[tipo][3] > balas.y
+                    and enemy.y + constantes.SPRITE_ENEMIGOS[1][3] > balas.y
                     and balas.y + 10 > enemy.y
                 ):
                     enemy.vivo=False
                     balas.vivo=False
-                    self.enemigo.e_explosiones.append(self.explosion.Explosion)
+                    self.explosionnes.append(Explosion(enemy.x,enemy.y))
                     self.puntuacion+=10
         for enemy in self.enemigo.enemigos:
             if (self.player.x + 25 > enemy.x
-                and enemy.x + constantes.SPRITE_ENEMIGO[tipo][2]> self.player.x
+                and enemy.x + constantes.SPRITE_ENEMIGOS[1][2]> self.player.x
                 and self.player.y + 15 > enemy.y
-                and enemy.y + constantes.SPRITE_ENEMIGO[tipo][3] > self.player.y
+                and enemy.y + constantes.SPRITE_ENEMIGOS[1][3] > self.player.y
             ):
                 enemy.vivo=False
+                self.explosionnes.append(Explosion(enemy.x,enemy.y))
+                self.explosionnes.append(Explosion(self.avion.x,self.avion.y))
+                self.avion.vidas-=1
+
+
+        for enemy in self.enemigo.enemigos:
+            for balas in self.avion.disparos:
+                if (enemy.x + constantes.SPRITE_ENEMIGOS[2][2] > balas.x
+                    and balas.x + 11 > enemy.x
+                    and enemy.y + constantes.SPRITE_ENEMIGOS[2][3] > balas.y
+                    and balas.y + 10 > enemy.y
+                ):
+                    enemy.vivo=False
+                    balas.vivo=False
+                    self.explosionnes.append(Explosion(enemy.x,enemy.y))
+                    self.puntuacion+=10
+        for enemy in self.enemigo.enemigos:
+            if (self.player.x + 25 > enemy.x
+                and enemy.x + constantes.SPRITE_ENEMIGOS[2][2]> self.player.x
+                and self.player.y + 15 > enemy.y
+                and enemy.y + constantes.SPRITE_ENEMIGOS[2][3] > self.player.y
+            ):
+                enemy.vivo=False
+                self.explosionnes.append(Explosion(enemy.x,enemy.y ))
+                self.explosionnes.append(Explosion(self.avion.x,self.avion.y))
+                self.avion.vidas-=1
+
+
+        for enemy in self.enemigo.enemigos:
+            for balas in self.avion.disparos:
+                if (enemy.x + constantes.SPRITE_ENEMIGOS[3][2] > balas.x
+                    and balas.x + 11 > enemy.x
+                    and enemy.y + constantes.SPRITE_ENEMIGOS[3][3] > balas.y
+                    and balas.y + 10 > enemy.y
+                ):
+                    enemy.vivo=False
+                    balas.vivo=False
+                    self.explosionnes.append(Explosion(enemy.x,enemy.y))
+                    self.puntuacion+=10
+                    
+        for enemy in self.enemigo.enemigos:
+            if (self.player.x + 25 > enemy.x
+                and enemy.x + constantes.SPRITE_ENEMIGOS[3][2]> self.player.x
+                and self.player.y + 15 > enemy.y
+                and enemy.y + constantes.SPRITE_ENEMIGOS[3][3] > self.player.y
+            ):
+                enemy.vivo=False        
+                self.explosionnes.append(Explosion(enemy.x,enemy.y))
+
+                self.avion.vidas-=1
+
+        for enemy in self.enemigo.enemigos:
+            for balas in self.avion.disparos:
+                if (enemy.x + constantes.SPRITE_ENEMIGOS[4][2] > balas.x
+                    and balas.x + 11 > enemy.x
+                    and enemy.y + constantes.SPRITE_ENEMIGOS[4][3] > balas.y
+                    and balas.y + 10 > enemy.y
+                ):
+                    enemy.vivo=False
+                    balas.vivo=False
+                    self.explosionnes.append(Explosion(enemy.x,enemy.y))
+                    self.puntuacion+=10
+        for enemy in self.enemigo.enemigos:
+            if (self.player.x + 25 > enemy.x
+                and enemy.x + constantes.SPRITE_ENEMIGOS[4][2]> self.player.x
+                and self.player.y + 15 > enemy.y
+                and enemy.y + constantes.SPRITE_ENEMIGOS[4][3] > self.player.y
+            ):
+                enemy.vivo=False        
+                self.explosionnes.append(Explosion(enemy.x,enemy.y))
+
+                self.avion.vidas-=1
                 
-                
-
-
-
+    
 
     def __pintar_avion(self, pulsado: bool):
         if not pulsado:
@@ -198,6 +251,8 @@ Copy the region of size (w, h) from (u, v) of the tilemap tm (0-7) to (x, y). If
     def __pintar_enemigo(self):
         for elemento in self.enemigos:
             pyxel.blt(elemento.x, elemento.y, *elemento.sprite)
+            
+        
 
     def __pintar_mapa(self):
         pyxel.blt(0, 0, *self.mapa.sprite)

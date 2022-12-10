@@ -8,7 +8,7 @@ class Explosion:
         self.vivo=True
         self.explosion=constantes.EXPLOSION1
 
-    def explotar():
+    def explotar(self):
         for i in constantes.EXPLOSION:
             self.explosion=constantes.EXPLOSION[i]
         
