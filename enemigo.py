@@ -51,58 +51,58 @@ class Regular(Enemigo):
         super().disparar()
 
 
-
+ 
 class Rojo(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.sprite = (1, *constantes.SPRITE_ROJO, constantes.COLKEY)
-
-
+ 
+ 
     def mover(self):
         #PRIMERA VUELTA
-
+ 
         if 0<pyxel.frame_count<15:
-            self.x+=1
-            self.y+=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 15<pyxel.frame_count<30:
-            self.y+=1
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 30<pyxel.frame_count<45:
-            self.x-=1
-            self.y+=1
+            self.x-=constantes.ENEMIGO_VELOCIDAD
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 45<pyxel.frame_count<60:
-            self.x-=1
+            self.x-=constantes.ENEMIGO_VELOCIDAD
         if 60<pyxel.frame_count<75:
-            self.x-=1
-            self.y+=1
+            self.x-=constantes.ENEMIGO_VELOCIDAD
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 75<pyxel.frame_count<90:
-            self.y-=1
+            self.y-=constantes.ENEMIGO_VELOCIDAD
         if 90<pyxel.frame_count<105:
-            self.x+=1
-            self.y-=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
+            self.y-=constantes.ENEMIGO_VELOCIDAD
         if 105<pyxel.frame_count<220:
-            self.x+=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
     #SEGUNDA VUELTA
         if 220<pyxel.frame_count<235:
-            self.x+=1
-            self.y+=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 235<pyxel.frame_count<250:
-            self.y+=1
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 250<pyxel.frame_count<265:
-            self.x-=1
-            self.y+=1
+            self.x-=constantes.ENEMIGO_VELOCIDAD
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 265<pyxel.frame_count<280:
-            self.x-=1
+            self.x-=constantes.ENEMIGO_VELOCIDAD
         if 280<pyxel.frame_count<295:
-            self.x-=1
-            self.y+=1
+            self.x-=constantes.ENEMIGO_VELOCIDAD
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 295<pyxel.frame_count<310:
-            self.y-=1
+            self.y-=constantes.ENEMIGO_VELOCIDAD
         if 310<pyxel.frame_count<325:
-            self.x+=1
-            self.y-=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
+            self.y-=constantes.ENEMIGO_VELOCIDAD
         if 325<pyxel.frame_count<400:
-            self.x+=1
-
+            self.x+=constantes.ENEMIGO_VELOCIDAD
+ 
 class Bombardero(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -110,31 +110,31 @@ class Bombardero(Enemigo):
         self.vidas=4
     def mover(self):
         if 0<pyxel.frame_count<60:
-            self.y+=1
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 60<pyxel.frame_count<75:
-            self.x+=1
-            self.y+=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 75<pyxel.frame_count<90:
-            self.x+=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
         if 90<pyxel.frame_count<105:
-            self.x+=1
-            self.y-=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
+            self.y-=constantes.ENEMIGO_VELOCIDAD
         if 105<pyxel.frame_count<120:
-            self.y-=1
+            self.y-=constantes.ENEMIGO_VELOCIDAD
         if 120<pyxel.frame_count<135:
-            self.y-=1
-            self.x-=1
+            self.y-=constantes.ENEMIGO_VELOCIDAD
+            self.x-=constantes.ENEMIGO_VELOCIDAD
         if 135<pyxel.frame_count<150:
-            self.x-=1
+            self.x-=constantes.ENEMIGO_VELOCIDAD
         if 150<pyxel.frame_count<165:
-            self.y+=1
-            self.x-=1
+            self.y+=constantes.ENEMIGO_VELOCIDAD
+            self.x-=constantes.ENEMIGO_VELOCIDAD
         if 165<pyxel.frame_count<500:
-            self.y+=1
-            
-                
-                
-
+            self.y+=constantes.ENEMIGO_VELOCIDAD
+           
+               
+               
+ 
 class Superbombardero(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -142,28 +142,31 @@ class Superbombardero(Enemigo):
         self.vidas=20
     def mover(self):
         if 0<pyxel.frame_count<60:
-            self.y-=1
+            self.y-=constantes.ENEMIGO_VELOCIDAD
         if 60<pyxel.frame_count<75:
-            self.x+=1
-            self.y+=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
+            self.y+=constantes.ENEMIGO_VELOCIDAD
         if 75<pyxel.frame_count<90:
-            self.x+=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
         if 90<pyxel.frame_count<115:
-            self.x+=1
-            self.y-=1
+            self.x+=constantes.ENEMIGO_VELOCIDAD
+            self.y-=constantes.ENEMIGO_VELOCIDAD
         if 115<pyxel.frame_count<130:
-            self.y-=1
+            self.y-=constantes.ENEMIGO_VELOCIDAD
         if 130<pyxel.frame_count<145:
-            self.y-=1
-            self.x-=1
+            self.y-=constantes.ENEMIGO_VELOCIDAD
+            self.x-=constantes.ENEMIGO_VELOCIDAD
         if 145<pyxel.frame_count<160:
-            self.x-=1
+            self.x-=constantes.ENEMIGO_VELOCIDAD
         if 160<pyxel.frame_count<175:
-            self.y+=1
-            self.x-=1
+            self.y+=constantes.ENEMIGO_VELOCIDAD
+            self.x-=constantes.ENEMIGO_VELOCIDAD
         if 175<pyxel.frame_count<250:
-            self.x-=1
-            self.y-=1
+            self.x-=constantes.ENEMIGO_VELOCIDAD
+            self.y-=constantes.ENEMIGO_VELOCIDAD
+
+
+
             
     def disparar(self):
         super().disparar()

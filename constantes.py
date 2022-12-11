@@ -24,7 +24,7 @@ PROYECTIL_VELOCIDAD = 7
 
 # Enemigos
 #velocidad
-ENEMIGO_VELOCIDAD = 3
+ENEMIGO_VELOCIDAD = 2
 # u, v, w, h
 #Regular
 SPRITE_REGULAR = (6, 160, 15, 14)
