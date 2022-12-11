@@ -20,6 +20,7 @@ AVION_MUERTE = ((6, 105, 25, 21), (36, 103, 30, 27), )
 # Proyectil
 PROYECTIL_SPRITE = (80, 83, 11, 10)
 PROYECTIL_ENEMIGO = (65, 83, 4, 4)
+PROYECTIL_VELOCIDAD = 7
 
 # Enemigos
 #velocidad
