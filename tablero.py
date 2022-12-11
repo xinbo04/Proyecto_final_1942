@@ -111,7 +111,7 @@ class Tablero:
 
             # Aparición de los enemigos
             self.regular = Regular(*self.enem_pos_i[0])
-            if self.dframe % 100 == 0:
+            if self.dframe % 80 == 0:
                 self.regulares.append(self.regular)
 
             self.rojo = Rojo(*self.enem_pos_i[1])
