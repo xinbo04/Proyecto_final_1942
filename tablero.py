@@ -38,7 +38,7 @@ class Tablero:
         self.avion = Avion(*constantes.AVION_INICIAL)
         self.proyectil = Proyectil(*constantes.AVION_INICIAL)
         self.enemigos = []
-        self.mapa = Mapa(0, 0)
+        self.mapa = Mapa()
         self.explosionnes = []
         self.puntuacion = Puntuacion(0)
         # variable contador que nos ayuda para el loop del avión
