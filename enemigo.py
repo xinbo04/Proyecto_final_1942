@@ -14,13 +14,12 @@ class Enemigo:
         self.y = y
         self.e_disparos = []
         self.vivo=True
-        self.sprite = (0, 0, 0, 0, 0, 0)
         #vuelta del avión regular
         self.vuelta = False
         self.pos = 0
         # Para el sprite tenemos la tupla (banco, x , y, ancho, alto)
 
-
+    #borrar
     def mover(self):
         self.x += 0
         self.y += 0
@@ -168,7 +167,7 @@ class Superbombardero(Enemigo):
             
     def disparar(self):
         super().disparar()
-        e_1=Proyectil(self.x, self.y)
         e_2=Proyectil(self.x, self.y)
-        self.e_disparos.append(e_1)
+        e_3=Proyectil(self.x, self.y)
         self.e_disparos.append(e_2)
+        self.e_disparos.append(e_3)
