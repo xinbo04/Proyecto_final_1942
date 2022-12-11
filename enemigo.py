@@ -17,6 +17,7 @@ class Enemigo:
         #vuelta del avión regular
         self.vuelta = False
         self.pos = 0
+        self.fin_explo = False
         # Para el sprite tenemos la tupla (banco, x , y, ancho, alto)
 
     #borrar
