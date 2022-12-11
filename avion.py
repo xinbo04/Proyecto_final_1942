@@ -1,11 +1,11 @@
 import constantes
 from proyectil import Proyectil
 
+
 class Avion:
     """Esta clase almacena la información necesaria para nuestro
     avión. Es muy probable que necesitemos más atributos, aquí mostramos
     los básicos"""
-    
 
     def __init__(self, x: int, y: int):
         """ Este método crea el objeto avión
@@ -29,9 +29,6 @@ class Avion:
         self.pulsado = False
         self.pos = 0
 
-
-
-
     def mover(self, direccion: str, tamaño: int):
         """Esto es un ejemplo de un método para mover avión horizontalmente.
         Recibe la dirección y el tamaño del tablero"""
@@ -54,10 +51,7 @@ class Avion:
               self.y > 81):
             self.y -= constantes.AVION_VELOCIDAD
 
-
     def disparar(self, pulsado: bool):
         if not pulsado:
             disparo = Proyectil(self.x, self.y)
             self.disparos.append(disparo)
-
-

@@ -10,7 +10,7 @@ from mapa import Mapa
 
 
 class Tablero:
-    """Esta clase contiene la información necesaria para 
+    """Esta clase contiene la información necesaria para
     representar el tablero"""
 
     def __init__(self, ancho: int, alto: int):
@@ -18,6 +18,9 @@ class Tablero:
         # Initializamos el objeto
         self.ancho = ancho
         self.alto = alto
+
+        self.frame_count, self.dframe = 0, 0
+        self.jugar, self.win = False, False
 
         # Este bloque inicializa pyxel
         # Lo primero que tenemos que hacer es crear la pantalla, ver la API
@@ -39,9 +42,10 @@ class Tablero:
         self.proyectil = Proyectil(*constantes.AVION_INICIAL)
         self.mapa = Mapa()
         self.regulares, self.rojos, self.bombarderos, self.superbombarderos = [], [], [], []
-        self.enemigos = [self.regulares, self.rojos, self.bombarderos, self.superbombarderos]
+        self.enemigos = [self.regulares, self.rojos, self.bombarderos,
+                         self.superbombarderos]
         self.explosiones = []
-        self.puntuacion = Puntuacion(0)
+        self.puntuacion = Puntuacion()
         # atributo contador que nos ayuda para
         self.pos = 0
         self.no_regular = 0
@@ -49,186 +53,278 @@ class Tablero:
         # atributo que nos indica la posición del jugador en un tiempo determinado
         self.av_x = self.av_y = 0
 
+        # variable para que parpadee el texto del inicio (es un contador)
+        self.t_cont = 0
         # Ejecutamos el juego
         pyxel.run(self.update, self.draw)
 
-
-### UPDATE ###
+    ### UPDATE ###
     def update(self):
         """Este código se ejecuta cada frame, aquí invocamos
         los métodos que se actualizan los  diferentes objetos"""
-        # importa el mapa y cada frame va subiendo la imagen (-1280 para la zona inferior)
-        pyxel.image(2).load(0, -1280 + pyxel.frame_count, "assets/MAPA.png")
-        #posiciones iniciales de los enemigos
-        self.enem_pos_i = ((random.randint(40,180), -50), (-40, 10), (120, -40), (120, 300))
-        
+        # Pulsar Q para salir del juego
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
+        # Pulsar el espacio para iniciar el juego
+        if pyxel.btn(pyxel.KEY_SPACE) and not self.jugar:
+            # frames en el momento del juego
+            self.frame_count = pyxel.frame_count
+            self.jugar = True
 
-        # Movimiento del avión
-        elif pyxel.btn(pyxel.KEY_RIGHT):
-            self.avion.mover('derecha', self.ancho)
-        elif pyxel.btn(pyxel.KEY_LEFT):
-            self.avion.mover('izquierda', self.ancho)
-        elif pyxel.btn(pyxel.KEY_UP):
-            self.avion.mover('arriba', self.alto)
-        elif pyxel.btn(pyxel.KEY_DOWN):
-            self.avion.mover('abajo', self.alto)
+        if self.jugar:
+            # diferencia de frames
+            self.dframe = pyxel.frame_count - self.frame_count
+            # importa el mapa y cada frame va subiendo la imagen
+            # (-1280 para la zona inferior)
+            pyxel.image(2).load(0, -1280 + self.dframe, "assets/MAPA.png")
+            # posiciones iniciales de los enemigos
 
-        # Loop del avión
-        if pyxel.btnp(pyxel.KEY_Z, 0, 0) and self.avion.loops > 0:
-            self.avion.pulsado = True
+            self.enem_pos_i = (
+                (random.randint(40, 180), -50), (-10, 10), (random.randint(
+                    40, 80), -40),
+                (random.randint(100, 120), 300))
 
-        # Movimiento de los enemigos
-        for tipo in range(len(self.enemigos)):
-            for enemigo in range(len(self.enemigos[tipo])):
-                self.enemigos[tipo][enemigo].mover()
+            # Movimiento del avión
+            if pyxel.btn(pyxel.KEY_RIGHT):
+                self.avion.mover('derecha', self.ancho)
+            elif pyxel.btn(pyxel.KEY_LEFT):
+                self.avion.mover('izquierda', self.ancho)
+            elif pyxel.btn(pyxel.KEY_UP):
+                self.avion.mover('arriba', self.alto)
+            elif pyxel.btn(pyxel.KEY_DOWN):
+                self.avion.mover('abajo', self.alto)
 
-        # Disparo del avión
-        if pyxel.btnp(pyxel.KEY_S, 0, 0):
-            self.avion.disparar(self.avion.pulsado)
-        for bala in self.avion.disparos:
-            bala.mover(self.alto)
+            # Loop del avión
+            if pyxel.btnp(pyxel.KEY_Z, 0, 0) and self.avion.loops > 0:
+                self.avion.pulsado = True
 
-        # Aparición de los enemigos
-        self.regular = Regular(*self.enem_pos_i[0])
-        if pyxel.frame_count % 50 == 0:
-            self.regulares.append(self.regular)
+            # Movimiento de los enemigos
+            for tipo in range(len(self.enemigos)):
+                for enemigo in range(len(self.enemigos[tipo])):
+                    self.enemigos[tipo][enemigo].mover(self.dframe)
 
-        self.rojo = Rojo(*self.enem_pos_i[1])
-        """
-        if 10 <= pyxel.frame_count <= 50:
-        """
-        if pyxel.frame_count % 10 == 0:
-            self.rojos.append(self.rojo)
+            # Disparo del avión
+            if pyxel.btnp(pyxel.KEY_S, 0, 0):
+                self.avion.disparar(self.avion.pulsado)
+            for bala in self.avion.disparos:
+                bala.mover(self.alto)
 
-        self.bombardero = Bombardero(*self.enem_pos_i[2])
-        if pyxel.frame_count % 300 == 0:
-            self.bombarderos.append(self.bombardero)
+            # Aparición de los enemigos
+            self.regular = Regular(*self.enem_pos_i[0])
+            if self.dframe % 100 == 0:
+                self.regulares.append(self.regular)
 
-        self.superbombardero = Superbombardero(*self.enem_pos_i[3])
-        if pyxel.frame_count % 600 == 0:
-            self.superbombarderos.append(self.superbombardero)
+            self.rojo = Rojo(*self.enem_pos_i[1])
+            if 200 <= self.dframe <= 240:
+                if self.dframe % 10 == 0:
+                    self.rojos.append(self.rojo)
 
+            self.bombardero = Bombardero(*self.enem_pos_i[2])
+            if self.dframe == 500 or self.dframe == 1000:
+                self.bombarderos.append(self.bombardero)
 
-        # Disparo de los enemigos
-        for tipo in range(len(self.enemigos)):
-            for i in range(len(self.enemigos[tipo])):
-                self.random = random.randint(1,2)
-                if pyxel.frame_count % 25 == 0 and self.random % 2 == 0: 
-                    self.enemigos[tipo][i].disparar()
-                for bala in self.enemigos[tipo][i].e_disparos:
-                    self.av_x = self.avion.x
-                    self.av_y = self.avion.y
-                    bala.mover_enemigo(self.av_x, self.av_y)
+            self.superbombardero = Superbombardero(*self.enem_pos_i[3])
+            if self.dframe == 1200:
+                self.superbombarderos.append(self.superbombardero)
 
-        #regular
-        for regular in self.regulares:
-            if (self.avion.x + 25 > regular.x
-                and regular.x + constantes.SPRITE_ENEMIGOS[0][2] > self.avion.x
-                and self.avion.y + 15 > regular.y
-                and regular.y + constantes.SPRITE_ENEMIGOS[0][3] > self.avion.y):
-                regular.vivo = False
-                self.explosiones.append(Explosion(regular.x, regular.y))
-                self.explosiones.append(Explosion(self.avion.x, self.avion.y))
-                self.avion.vidas -= 1
-                while self.no_regular < len(self.regulares):
-                    elem = self.regulares[self.no_regular]
-                    if not elem.vivo:
-                        self.regulares.remove(elem)
-                    else:
-                        self.no_regular += 1
+            # Disparo de los enemigos
+            for tipo in range(len(self.enemigos)):
+                for i in range(len(self.enemigos[tipo])):
+                    self.random = random.randint(1, 2)
+                    if self.dframe % 25 == 0 and self.random % 2 == 0:
+                        self.enemigos[tipo][i].disparar()
+                    for bala in self.enemigos[tipo][i].e_disparos:
+                        self.av_x = self.avion.x
+                        self.av_y = self.avion.y
+                        bala.mover_enemigo(self.av_x, self.av_y)
 
-        if len(self.regulares) > 0 and len(self.avion.disparos) > 0:
+            # Colisión/muerte de Regular
+            # muerte por colisión
             for regular in self.regulares:
-                for balas in self.avion.disparos:
-                    if -10 < (balas.x + 8) - (regular.x + 8) < 10 \
-                        and -10 < (balas.y + 8) - (regular.y + 8) < 10:
-                        self.explosiones.append(Explosion(regular.x, regular.y))
-                        self.puntuacion.puntos += 10
-                        if regular in self.regulares:
-                            self.regulares.remove(regular)
-
-    
-        for rojo in self.rojos:
-            if (self.avion.x + 25 > rojo.x
-                and rojo.x + constantes.SPRITE_ENEMIGOS[1][2] > self.avion.x
-                and self.avion.y + 15 > rojo.y
-                and rojo.y + constantes.SPRITE_ENEMIGOS[1][3] > rojo.y
-            ):
-                self.explosiones.append(Explosion(rojo.x,rojo.y))
-                self.explosiones.append(Explosion(self.avion.x, self.avion.y))
-
-        for rojo in self.rojos:
-            for balas in self.avion.disparos:
-                if -10 < (balas.x + 8) - (rojo.x + 8) < 10 and \
-                    -10 < (balas.y + 8) - (rojo.y + 8) < 10:
-                    if rojo in self.rojos:
-                        self.rojos.remove(rojo)
+                if (self.avion.x + 25 > regular.x
+                    and regular.x + constantes.SPRITE_ENEMIGOS[0][2] >
+                    self.avion.x
+                    and self.avion.y + 15 > regular.y
+                    and regular.y + constantes.SPRITE_ENEMIGOS[0][3] >
+                    self.avion.y) and not self.avion.pulsado:
+                    regular.vivo = False
+                    self.explosiones.append(
+                        Explosion(regular.x, regular.y))
+                    self.explosiones.append(
+                        Explosion(self.avion.x, self.avion.y))
+                    self.avion.vidas -= 1
                     self.puntuacion.puntos += 10
-                    self.explosiones.append(Explosion(self.rojo.x,self.rojo.y))
-                    """
-                    tiempo=pyxel.frame_count
-                    for ex in self.explosiones:
-                        p_Ex=self.explosiones.index(ex)
-                        t=(pyxel.frame_count-tiempo)
-                        if t>    """""""""
 
-
-        for bombardero in self.bombarderos:
-            if (-10 < (bombardero.x + 8) - (self.avion.x + 8) < 10) and (-10 < (bombardero.y + 8) - (self.avion.y + 8) < 10):
-                self.explosiones.append(Explosion(bombardero.x, bombardero.y))
-                self.explosiones.append(Explosion(self.avion.x, self.avion.y))
-                self.avion.vidas -= 1
-
-        for bombardero in self.bombarderos:
-            for balas in self.avion.disparos:
-                if -10 < (balas.x + 8) - (bombardero.x + 8) < 10 and \
-                    -10 < (balas.y + 8) - (bombardero.y + 8) < 10:
-                    if bombardero.vidas > 1:
-                        bombardero.vidas-=1
-                    else:
-                        self.bombarderos.remove(bombardero)
-                        self.explosiones.append(Explosion(bombardero.x, bombardero.y))
-                        self.puntuacion.puntos += 10
-
-
-
-        for superbombardero in self.superbombarderos:
-            if -10 < (superbombardero.x + 8) - (self.avion.x + 8) < 10 and \
-                    -10 < (superbombardero.y + 8) - (self.avion.y + 8) < 10:
-                self.explosiones.append(Explosion(superbombardero.x, superbombardero.y))
-                self.explosiones.append(Explosion(self.avion.x, self.avion.y))
-                self.avion.vidas -= 1
- 
-        for superbombardero in self.superbombarderos:
-            for balas in self.avion.disparos:
-                if -10 < (balas.x + 8) - (superbombardero.x + 8) < 10 and \
-                    -10 < (balas.y + 8) - (superbombardero.y + 8) < 10:
-                        if superbombardero.vidas>1:
-                            superbombardero.vidas-=1
-                        else:
-
-                            self.explosiones.append(Explosion(superbombardero.x, superbombardero.y))
+            # muerte por disparo
+            if len(self.regulares) > 0 and len(self.avion.disparos) > 0:
+                for regular in self.regulares:
+                    for balas in self.avion.disparos:
+                        if -10 < (balas.x + 8) - (regular.x + 8) < 10 \
+                                and -10 < (balas.y + 8) - (
+                                regular.y + 8) < 10 \
+                                and not self.avion.pulsado:
+                            self.explosiones.append(
+                                Explosion(regular.x, regular.y))
                             self.puntuacion.puntos += 10
-                            self.superbombarderos.remove(superbombardero)
+                            if regular in self.regulares:
+                                regular.vivo = False
+
+            # Colisión/muerte de Rojo
+            # muerte por colisión
+            for rojo in self.rojos:
+                if self.avion.x + 25 > rojo.x and rojo.x + \
+                        constantes.SPRITE_ENEMIGOS[1][2] > self.avion.x and \
+                        self.avion.y + 15 > rojo.y and rojo.y + \
+                        constantes.SPRITE_ENEMIGOS[1][3] > self.avion.y and \
+                        not self.avion.pulsado:
+                    self.explosiones.append(Explosion(rojo.x, rojo.y))
+                    self.explosiones.append(
+                        Explosion(self.avion.x, self.avion.y))
+                    rojo.vivo = False
+            # muerte por disparo
+            for rojo in self.rojos:
+                for balas in self.avion.disparos:
+                    if -10 < (balas.x + 8) - (rojo.x + 8) < 10 and \
+                            -10 < (balas.y + 8) - (rojo.y + 8) < 10 and \
+                            not self.avion.pulsado:
+                        if rojo in self.rojos:
+                            rojo.vivo = False
+                        self.puntuacion.puntos += 30
+                        self.explosiones.append(
+                            Explosion(self.rojo.x, self.rojo.y))
+
+            # Colisión/muerte de Bombardero
+            # muerte por colisión
+            for bombardero in self.bombarderos:
+                if (-10 < (bombardero.x + 8) - (
+                        self.avion.x + 8) < 10) and (
+                        -10 < (bombardero.y + 8) - (
+                        self.avion.y + 8) < 10) and \
+                        not self.avion.pulsado:
+                    self.explosiones.append(
+                        Explosion(bombardero.x, bombardero.y))
+                    self.explosiones.append(
+                        Explosion(self.avion.x, self.avion.y))
+                    bombardero.vivo = False
+                    self.avion.vidas -= 1
+            # muerte por disparo
+            for bombardero in self.bombarderos:
+                for balas in self.avion.disparos:
+                    if -10 < (balas.x + 8) - (bombardero.x + 8) < 10 and \
+                            -10 < (balas.y + 8) - (
+                            bombardero.y + 8) < 10 and \
+                            not self.avion.pulsado:
+                        if bombardero.vidas > 1:
+                            bombardero.vidas -= 1
+                        else:
+                            bombardero.vivo = False
+
+                            self.explosiones.append(
+                                Explosion(bombardero.x, bombardero.y))
+                            self.puntuacion.puntos += 50
+
+            # Colisión/muerte de Superbombardero
+            # muerte por colisión
+            for superbombardero in self.superbombarderos:
+                if -10 < (superbombardero.x + 8) - (
+                        self.avion.x + 8) < 10 and \
+                        -10 < (superbombardero.y + 8) - (
+                        self.avion.y + 8) < 10 \
+                        and not self.avion.pulsado:
+                    if superbombardero.vidas > 1:
+                        superbombardero.vidas -= 1
+                    else:
+                        self.explosiones.append(
+                            Explosion(superbombardero.x,
+                                      superbombardero.y))
+                        self.explosiones.append(
+                            Explosion(self.avion.x, self.avion.y))
+                        superbombardero.vivo = False
+                    self.avion.vidas -= 1
+                    self.win = True
+
+            # muerte por disparo
+            for superbombardero in self.superbombarderos:
+                for balas in self.avion.disparos:
+                    if -10 < (balas.x + 8) - (
+                            superbombardero.x + 8) < 10 and \
+                            -10 < (balas.y + 8) - (
+                            superbombardero.y + 8) < 10 \
+                            and not self.avion.pulsado:
+                        if superbombardero.vidas > 1:
+                            superbombardero.vidas -= 1
+                        else:
+                            superbombardero.vivo = False
+                            self.explosiones.append(
+                                Explosion(superbombardero.x,
+                                          superbombardero.y))
+                            self.puntuacion.puntos += 100
+                            self.win = True
+
+            # muerte por disparo de enemigos hacia el avión principal
+            for tipo in range(len(self.enemigos)):
+                for enemigo in self.enemigos[tipo]:
+                    for balas in enemigo.e_disparos:
+                        if -10 < (balas.x + 8) - (
+                                self.avion.x + 8) < 10 and \
+                                -10 < (balas.y + 8) - (
+                                self.avion.y + 8) < 10 \
+                                and not self.avion.pulsado:
+                            self.explosiones.append(
+                                Explosion(self.avion.x, self.avion.y))
+                            self.avion.vidas -= 1
+                            enemigo.e_disparos.remove(balas)
+
+    def __pintar_inicio(self):
+        pyxel.blt(*constantes.NUM_1942)
+        if pyxel.frame_count % 2 == 0:
+            self.t_cont += 1
+        if self.t_cont >= 8:
+            pyxel.text(*constantes.TECLA)
+            if self.t_cont == 20:
+                self.t_cont = 0
+        pyxel.blt(*constantes.HECHO_POR1)
+        pyxel.blt(*constantes.HECHO_POR2)
+
+    def __pintar_final(self):
+        pyxel.blt(*constantes.NUM_1942)
+        if pyxel.frame_count % 2 == 0:
+            self.t_cont += 1
+        if self.t_cont >= 8:
+            pyxel.text(55, 140, "GRACIAS POR JUGAR A ESTE JUEGO", 10)
+            if self.t_cont == 20:
+                self.t_cont = 0
+        if self.win:
+            pyxel.text(90, 170, "HAS GANADO", 3)
+            pyxel.text(87, 180, "ENHORABUENA!", 11)
+        elif self.avion.vidas < 1:
+            pyxel.text(95, 170, "GAME OVER", 2)
+            pyxel.text(92, 180, "HAS PERDIDO", 2)
+
+        pyxel.blt(*constantes.HECHO_POR1)
+        pyxel.blt(*constantes.HECHO_POR2)
 
     def __pintar_avion(self, pulsado: bool):
         if not pulsado:
             pyxel.blt(self.avion.x, self.avion.y, *self.avion.sprite)
             # cada frame cambia la hélice
-            if pyxel.frame_count % 2 == 0:
+            if self.dframe % 2 == 0:
                 # con ajuste de píxeles
                 # mitad izquierda de la hélice
-                pyxel.blt(self.avion.x + 4, self.avion.y + 1, *self.avion.helice)
+                pyxel.blt(self.avion.x + 4, self.avion.y + 1,
+                          *self.avion.helice)
                 # mitad derecha
-                pyxel.blt(self.avion.x + 14, self.avion.y + 1, *self.avion.helice)
+                pyxel.blt(self.avion.x + 14, self.avion.y + 1,
+                          *self.avion.helice)
         else:
-            loop_avion = (self.avion.x, self.avion.y, 0, *constantes.AVION_SPRITES_LOOP[self.avion.pos], constantes.COLKEY)
+            loop_avion = (self.avion.x, self.avion.y, 0,
+                          *constantes.AVION_SPRITES_LOOP[self.avion.pos],
+                          constantes.COLKEY)
             pyxel.blt(*loop_avion)
-            if pyxel.frame_count % 4 == 0:
+            if self.dframe % 4 == 0:
                 self.avion.pos += 1
-                if self.avion.pos == len(constantes.AVION_SPRITES_LOOP) - 1:
+                if self.avion.pos == len(
+                        constantes.AVION_SPRITES_LOOP) - 1:
                     self.avion.pulsado = False
                     self.avion.pos = 0
                     self.avion.loops -= 1
@@ -251,17 +347,20 @@ class Tablero:
 
     def __pintar_mapa(self):
         pyxel.blt(0, 0, *self.mapa.sprite)
-    
+
     def __pintar_explosiones(self):
         for tipo in range(len(self.enemigos)):
             for enemigo in self.enemigos[tipo]:
-                if not enemigo.fin_explo:
-                    pyxel.blt(enemigo.x, enemigo.y, 0, *constantes.EXPLOSION[self.pos], constantes.COLKEY)
-                    if pyxel.frame_count % 4 == 0:
+                if not enemigo.vivo and not enemigo.fin_explo:
+                    pyxel.blt(enemigo.x, enemigo.y, 0,
+                              *constantes.EXPLOSION[self.pos],
+                              constantes.COLKEY)
+                    if self.dframe % 3 == 0:
                         self.pos += 1
                         if self.pos == len(constantes.EXPLOSION) - 1:
                             enemigo.fin_explo = True
-                            self.pos = 0    
+                            self.enemigos[tipo].remove(enemigo)
+                            self.pos = 0
 
     def __pintar_hud(self):
         """Este método sirve para pintar el hud (Head-Up Display o la barra de estado en español), por ejemplo la puntuación, las vidas..."""
@@ -283,16 +382,23 @@ class Tablero:
     def draw(self):
         """Este código se ejecuta también cada frame, aquí se dibujan todos los objetos
         """
-        pyxel.cls(1)
 
         """Dibujamos el avión tomando los valores del objeto avión
-        Los parámetros son x, y en la pantalla  y una tupla que contiene: 
-        el número del banco de imágenes, la x e y de la imagen en el banco 
+        Los parámetros son x, y en la pantalla  y una tupla que contiene:
+        el número del banco de imágenes, la x e y de la imagen en el banco
         y el tamaño de la imagen"""
-        self.__pintar_mapa()
-        self.__pintar_avion(self.avion.pulsado)
-        self.__pintar_disparo()
-        self.__pintar_enemigo()
-        self.__pintar_hud()
-        self.__pintar_e_disparo()
-        self.__pintar_explosiones()
+        if not self.jugar:
+            pyxel.cls(0)
+            self.__pintar_inicio()
+        else:
+            pyxel.cls(1)
+            self.__pintar_mapa()
+            self.__pintar_avion(self.avion.pulsado)
+            self.__pintar_disparo()
+            self.__pintar_enemigo()
+            self.__pintar_hud()
+            self.__pintar_e_disparo()
+            self.__pintar_explosiones()
+        if self.avion.vidas < 1 or self.win:
+            pyxel.cls(0)
+            self.__pintar_final()
