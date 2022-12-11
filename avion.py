@@ -27,6 +27,7 @@ class Avion:
         self.loops = 3
         # Variable booleana para el loop del avión
         self.pulsado = False
+        self.pos = 0
 
 
 
