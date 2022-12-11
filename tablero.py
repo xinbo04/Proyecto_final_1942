@@ -50,6 +50,9 @@ class Tablero:
         self.enemigos.append(self.enemigo2)
         self.enemigos.append(self.enemigo3)
         self.enemigos.append(self.enemigo4)
+        self.av_x = 0
+        self.av_y = 0
+
 
         self.pos = 0
 
@@ -72,7 +75,7 @@ class Tablero:
     def draw_list(list):
         for elem in list:
             elem.draw()
-
+### UPDATE ###
     def update(self):
         """Este código se ejecuta cada frame, aquí invocamos
         los métodos que se actualizan los  diferentes objetos"""
@@ -107,10 +110,14 @@ class Tablero:
 
         # Disparo de los enemigos
         for i in range(len(self.enemigos)):
-            if pyxel.frame_count % 10 == 0: 
+            self.random = random.randint(1,2)
+            if pyxel.frame_count % 25 == 0 and self.random % 2 == 0: 
                 self.enemigos[i].disparar()
             for bala in self.enemigos[i].e_disparos:
-                bala.mover_enemigo()
+                self.av_x = self.avion.x
+                self.av_y = self.avion.y
+                bala.mover_enemigo(self.av_x, self.av_y)
+
 
     def eliminar(self):
         # colision
