@@ -153,6 +153,7 @@ class Tablero:
                     self.explosiones.append(
                         Explosion(self.avion.x, self.avion.y))
                     self.avion.vidas -= 1
+                    self.avion.vivo = False
                     self.puntuacion.puntos += 10
 
             # muerte por disparo
@@ -207,6 +208,7 @@ class Tablero:
                         Explosion(self.avion.x, self.avion.y))
                     bombardero.vivo = False
                     self.avion.vidas -= 1
+                    self.avion.vivo = False
             # muerte por disparo
             for bombardero in self.bombarderos:
                 for balas in self.avion.disparos:
@@ -241,6 +243,7 @@ class Tablero:
                             Explosion(self.avion.x, self.avion.y))
                         superbombardero.vivo = False
                     self.avion.vidas -= 1
+                    self.avion.vivo = False
                     self.win = True
 
             # muerte por disparo
@@ -273,6 +276,7 @@ class Tablero:
                             self.explosiones.append(
                                 Explosion(self.avion.x, self.avion.y))
                             self.avion.vidas -= 1
+                            self.avion.vivo = False
                             enemigo.e_disparos.remove(balas)
 
     def __pintar_inicio(self):
@@ -305,7 +309,7 @@ class Tablero:
         pyxel.blt(*constantes.HECHO_POR2)
 
     def __pintar_avion(self, pulsado: bool):
-        if not pulsado:
+        if not pulsado and self.avion.vivo:
             pyxel.blt(self.avion.x, self.avion.y, *self.avion.sprite)
             # cada frame cambia la hélice
             if self.dframe % 2 == 0:
@@ -316,7 +320,7 @@ class Tablero:
                 # mitad derecha
                 pyxel.blt(self.avion.x + 14, self.avion.y + 1,
                           *self.avion.helice)
-        else:
+        elif pulsado and self.avion.vivo:
             loop_avion = (self.avion.x, self.avion.y, 0,
                           *constantes.AVION_SPRITES_LOOP[self.avion.pos],
                           constantes.COLKEY)
@@ -328,6 +332,18 @@ class Tablero:
                     self.avion.pulsado = False
                     self.avion.pos = 0
                     self.avion.loops -= 1
+
+        if not self.avion.vivo:
+            pyxel.blt(self.avion.x, self.avion.y, 0,
+                              *constantes.AVION_MUERTE[self.avion.muerte],
+                              constantes.COLKEY)
+            if self.dframe % 5 == 0:
+                self.avion.muerte += 1
+                if self.avion.muerte == len(constantes.AVION_MUERTE) - 1:
+                    self.avion.x = constantes.ANCHO // 2
+                    self.avion.y = 200
+                    self.avion.vivo = True
+                    self.avion.muerte = 0
 
     def __pintar_disparo(self):
         for bala in self.avion.disparos:

@@ -23,7 +23,7 @@ AVION_SPRITES_LOOP = (
 # velocidad del avión
 AVION_VELOCIDAD = 5
 # muerte del avion
-AVION_MUERTE = ((6, 105, 25, 21), (36, 103, 30, 27),)
+AVION_MUERTE = ((6, 105, 25, 21), (36, 103, 30, 27), (70, 101,32,31), (105,101,31,31), (140, 102, 31,29), (176,104,29,24))
 
 # Proyectil
 PROYECTIL_SPRITE = (80, 83, 11, 10)

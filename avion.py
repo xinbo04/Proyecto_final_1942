@@ -25,9 +25,12 @@ class Avion:
         self.disparos = []
         self.vidas = 3
         self.loops = 3
+        self.vivo = True
         # Variable booleana para el loop del avión
         self.pulsado = False
         self.pos = 0
+        # contador para los sprites de su muerte
+        self.muerte = 0
 
     def mover(self, direccion: str, tamaño: int):
         """Esto es un ejemplo de un método para mover avión horizontalmente.
