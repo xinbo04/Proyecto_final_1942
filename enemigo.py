@@ -13,7 +13,7 @@ class Enemigo:
         self.x = x
         self.y = y
         self.e_disparos = []
-        self.vivo=True
+        self.vivo = True
         #vuelta del avión regular
         self.vuelta = False
         self.pos = 0
@@ -33,7 +33,8 @@ class Enemigo:
 class Regular(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.sprite = (0, *constantes.SPRITE_REGULAR, constantes.COLKEY)
+        if self.vivo:
+            self.sprite = (0, *constantes.SPRITE_REGULAR, constantes.COLKEY)
 
     def mover(self):
         if not self.vuelta:
