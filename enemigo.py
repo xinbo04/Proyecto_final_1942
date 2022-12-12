@@ -2,8 +2,6 @@
 Created by XINBO CHEN CHEN in nov 2022
 Universidad Carlos III de Madrid
 """
-import pyxel
-
 import constantes
 from proyectil import Proyectil
 
@@ -54,33 +52,45 @@ class Rojo(Enemigo):
         super().__init__(x, y)
         self.sprite = (1, *constantes.SPRITE_ROJO, constantes.COLKEY)
 
+
     def mover(self, dframe):
 
         if 200 < dframe < 245:
+            self.sprite = (1, *constantes.ROJO_VUELTA[0], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
         if 245 < dframe < 260:
+            self.sprite = (1, *constantes.ROJO_VUELTA[1], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
             self.y += constantes.ENEMIGO_VELOCIDAD
         if 260 < dframe < 275:
+            self.sprite = (1, *constantes.ROJO_VUELTA[2], constantes.COLKEY)
             self.y += constantes.ENEMIGO_VELOCIDAD
         if 275 < dframe < 290:
+            self.sprite = (1, *constantes.ROJO_VUELTA[3], constantes.COLKEY)
             self.x -= constantes.ENEMIGO_VELOCIDAD
             self.y += constantes.ENEMIGO_VELOCIDAD
         if 290 < dframe < 305:
+            self.sprite = (1, *constantes.ROJO_VUELTA[4], constantes.COLKEY)
             self.x -= constantes.ENEMIGO_VELOCIDAD
         if 305 < dframe < 320:
+            self.sprite = (1, *constantes.ROJO_VUELTA[5], constantes.COLKEY)
             self.x -= constantes.ENEMIGO_VELOCIDAD
             self.y -= constantes.ENEMIGO_VELOCIDAD
         if 320 < dframe < 335:
+            self.sprite = (1, *constantes.ROJO_VUELTA[6], constantes.COLKEY)
             self.y -= constantes.ENEMIGO_VELOCIDAD
         if 335 < dframe < 350:
+            self.sprite = (1, *constantes.ROJO_VUELTA[7], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
             self.y -= constantes.ENEMIGO_VELOCIDAD
         if 350 < dframe < 365:
+            self.sprite = (1, *constantes.ROJO_VUELTA[4], constantes.COLKEY)
             self.x -= constantes.ENEMIGO_VELOCIDAD
         if 365 < dframe > 380:
+            self.sprite = (1, *constantes.ROJO_VUELTA[0], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
         if 380 < dframe < 395:
+            self.sprite = (1, *constantes.ROJO_VUELTA[4], constantes.COLKEY)
             self.x -= constantes.ENEMIGO_VELOCIDAD
         if dframe > 400:
             dframe -= 45
@@ -95,50 +105,68 @@ class Bombardero(Enemigo):
     def mover(self, dframe):
         # primera aparicion
         if 500 < dframe < 560:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[0], constantes.COLKEY)
             self.y += constantes.ENEMIGO_VELOCIDAD
         if 560 < dframe < 575:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[1], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
             self.y += constantes.ENEMIGO_VELOCIDAD
         if 575 < dframe < 590:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[2], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
         if 590 < dframe < 605:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[3], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
             self.y -= constantes.ENEMIGO_VELOCIDAD
         if 605 < dframe < 620:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[4], constantes.COLKEY)
             self.y -= constantes.ENEMIGO_VELOCIDAD
         if 620 < dframe < 635:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[5], constantes.COLKEY)
             self.y -= constantes.ENEMIGO_VELOCIDAD
             self.x -= constantes.ENEMIGO_VELOCIDAD
         if 635 < dframe < 650:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[6], constantes.COLKEY)
             self.x -= constantes.ENEMIGO_VELOCIDAD
         if 650 < dframe < 665:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[7], constantes.COLKEY)
             self.y += constantes.ENEMIGO_VELOCIDAD
             self.x -= constantes.ENEMIGO_VELOCIDAD
         if 665 < dframe < 1000:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[0], constantes.COLKEY)
             self.y += constantes.ENEMIGO_VELOCIDAD
 
         # segunda aparicion
         if 1000 < dframe < 1060:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[0], constantes.COLKEY)
             self.y += constantes.ENEMIGO_VELOCIDAD
         if 1060 < dframe < 1075:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[1], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
             self.y += constantes.ENEMIGO_VELOCIDAD
         if 1075 < dframe < 1090:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[2], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
         if 1090 < dframe < 1105:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[3], constantes.COLKEY)
             self.x += constantes.ENEMIGO_VELOCIDAD
             self.y -= constantes.ENEMIGO_VELOCIDAD
         if 1105 < dframe < 1120:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[4], constantes.COLKEY)
             self.y -= constantes.ENEMIGO_VELOCIDAD
         if 1120 < dframe < 1135:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[5], constantes.COLKEY)
             self.y -= constantes.ENEMIGO_VELOCIDAD
             self.x -= constantes.ENEMIGO_VELOCIDAD
         if 1135 < dframe < 1150:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[6], constantes.COLKEY)
             self.x -= constantes.ENEMIGO_VELOCIDAD
         if 1150 < dframe < 1165:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[7], constantes.COLKEY)
             self.y += constantes.ENEMIGO_VELOCIDAD
             self.x -= constantes.ENEMIGO_VELOCIDAD
         if 1165 < dframe < 1500:
+            self.sprite = (1, *constantes.BOMBARDERO_VUELTA[0], constantes.COLKEY)
             self.y += constantes.ENEMIGO_VELOCIDAD
 
 
