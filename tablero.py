@@ -61,7 +61,7 @@ class Tablero:
     ### UPDATE ###
     def update(self):
         """Este código se ejecuta cada frame, aquí invocamos
-        los métodos que se actualizan los  diferentes objetos"""
+        los métodos que actualizan los diferentes objetos"""
         # Pulsar Q para salir del juego
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
@@ -98,11 +98,6 @@ class Tablero:
             if pyxel.btnp(pyxel.KEY_Z, 0, 0) and self.avion.loops > 0:
                 self.avion.pulsado = True
 
-            # Movimiento de los enemigos
-            for tipo in range(len(self.enemigos)):
-                for enemigo in range(len(self.enemigos[tipo])):
-                    self.enemigos[tipo][enemigo].mover(self.dframe)
-
             # Disparo del avión
             if pyxel.btnp(pyxel.KEY_S, 0, 0):
                 self.avion.disparar(self.avion.pulsado)
@@ -126,6 +121,11 @@ class Tablero:
             self.superbombardero = Superbombardero(*self.enem_pos_i[3])
             if self.dframe == 1200:
                 self.superbombarderos.append(self.superbombardero)
+
+            # Movimiento de los enemigos
+            for tipo in range(len(self.enemigos)):
+                for enemigo in range(len(self.enemigos[tipo])):
+                    self.enemigos[tipo][enemigo].mover(self.dframe)
 
             # Disparo de los enemigos
             for tipo in range(len(self.enemigos)):
