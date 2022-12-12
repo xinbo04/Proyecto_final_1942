@@ -2,14 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0cbdde01-dccd-4902-a293-868bb6deb677" name="Changes" comment="...">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Proyecto_final_1942.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Proyecto Final 1942.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/avion.py" beforeDir="false" afterPath="$PROJECT_DIR$/avion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Posiciones/sprites1.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Posiciones/sprites2.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/comentarios/posicion limite del avion principal abajo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/comentarios/posicion limite del avion principal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/comentarios/salida avion inicial.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/comentarios/sprites.xcf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/constantes.py" beforeDir="false" afterPath="$PROJECT_DIR$/constantes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enemigo.py" beforeDir="false" afterPath="$PROJECT_DIR$/enemigo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/explosion.py" beforeDir="false" afterPath="$PROJECT_DIR$/explosion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mapa.py" beforeDir="false" afterPath="$PROJECT_DIR$/mapa.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proyectil.py" beforeDir="false" afterPath="$PROJECT_DIR$/proyectil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/puntuacion.py" beforeDir="false" afterPath="$PROJECT_DIR$/puntuacion.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tablero.py" beforeDir="false" afterPath="$PROJECT_DIR$/tablero.py" afterDir="false" />
@@ -34,15 +43,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/xinbo/Documents/UC3M - Grado en Ingeniería Informática/Curso 1/Cuatrimestre 1/Programación/Proyecto_final_1942",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/xinbo/Documents/UC3M - Grado en Ingeniería Informática/Curso 1/Cuatrimestre 1/Programación/Proyecto_final_1942&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Proyecto_final_1942" />

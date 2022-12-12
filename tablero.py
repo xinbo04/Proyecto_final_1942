@@ -3,7 +3,7 @@ import random
 import constantes
 from avion import Avion
 from proyectil import Proyectil
-from enemigo import Enemigo, Regular, Rojo, Bombardero, Superbombardero
+from enemigo import Regular, Rojo, Bombardero, Superbombardero
 from explosion import Explosion
 from puntuacion import Puntuacion
 from mapa import Mapa
@@ -25,14 +25,11 @@ class Tablero:
         # Este bloque inicializa pyxel
         # Lo primero que tenemos que hacer es crear la pantalla, ver la API
         # para más parámetros
-        pyxel.init(self.ancho, self.alto, title="1942", fps=25)
+        pyxel.init(self.ancho, self.alto, title="Proyecto final: 1942", fps=25)
 
         # Cargamos los ficheros pyxres que vamos a usar
         pyxel.image(0).load(0, 0, "assets/sprites1.png")
         pyxel.image(1).load(0, 0, "assets/sprites2.png")
-        """
-        pyxel.image(2).load(0, 0, "assets/sprites3.png")
-        """
 
         # Creamos un avión en la mitad de la pantalla en x. En y estará en la
         # posición 200
@@ -141,7 +138,7 @@ class Tablero:
             # Colisión/muerte de Regular
             # muerte por colisión
             for regular in self.regulares:
-                #hitbox reducido a un cuadrado
+                # hitbox reducido a un cuadrado
                 if (self.avion.x + 25 > regular.x
                     and regular.x + constantes.SPRITE_ENEMIGOS[0][2] >
                     self.avion.x
@@ -162,7 +159,7 @@ class Tablero:
             if len(self.regulares) > 0 and len(self.avion.disparos) > 0:
                 for regular in self.regulares:
                     for balas in self.avion.disparos:
-                    #hitbox reducido a un cuadrado
+                        # hitbox reducido a un cuadrado
                         if -11 < (balas.x + 9) - (regular.x + 9) < 11 \
                                 and -11 < (balas.y + 9) - (
                                 regular.y + 9) < 11 \
@@ -175,7 +172,7 @@ class Tablero:
             # Colisión/muerte de Rojo
             # muerte por colisión
             for rojo in self.rojos:
-                #hitbox reducido a un cuadrado
+                # hitbox reducido a un cuadrado
                 if self.avion.x + 25 > rojo.x and rojo.x + \
                         constantes.SPRITE_ENEMIGOS[1][2] > self.avion.x and \
                         self.avion.y + 15 > rojo.y and rojo.y + \
@@ -188,7 +185,7 @@ class Tablero:
             # muerte por disparo
             for rojo in self.rojos:
                 for balas in self.avion.disparos:
-                    #hitbox reducido a un cuadrado
+                    # hitbox reducido a un cuadrado
                     if -11 < (balas.x + 9) - (rojo.x + 9) < 11 and \
                             -11 < (balas.y + 9) - (rojo.y + 9) < 11 and \
                             not self.avion.pulsado:
@@ -201,7 +198,7 @@ class Tablero:
             # Colisión/muerte de Bombardero
             # muerte por colisión
             for bombardero in self.bombarderos:
-                #hitbox reducido a un cuadrado
+                # hitbox reducido a un cuadrado
                 if (-11 < (bombardero.x + 9) - (
                         self.avion.x + 9) < 11) and (
                         -11 < (bombardero.y + 9) - (
@@ -217,7 +214,7 @@ class Tablero:
             # muerte por disparo
             for bombardero in self.bombarderos:
                 for balas in self.avion.disparos:
-                    #hitbox reducido a un cuadrado
+                    # hitbox reducido a un cuadrado
                     if -11 < (balas.x + 9) - (bombardero.x + 9) < 11 and \
                             -11 < (balas.y + 9) - (
                             bombardero.y + 9) < 11 and \
@@ -235,7 +232,7 @@ class Tablero:
             # Colisión/muerte de Superbombardero
             # muerte por colisión
             for superbombardero in self.superbombarderos:
-                #hitbox reducido a un cuadrado
+                # hitbox reducido a un cuadrado
                 if -11 < (superbombardero.x + 9) - (
                         self.avion.x + 9) < 11 and \
                         -11 < (superbombardero.y + 9) - (
@@ -257,7 +254,7 @@ class Tablero:
             # muerte por disparo
             for superbombardero in self.superbombarderos:
                 for balas in self.avion.disparos:
-                    #hitbox reducido a un cuadrado
+                    # hitbox reducido a un cuadrado
                     if -11 < (balas.x + 9) - (
                             superbombardero.x + 9) < 11 and \
                             -11 < (balas.y + 9) - (
@@ -288,7 +285,8 @@ class Tablero:
                             self.avion.vidas -= 1
                             self.avion.vivo = False
                             enemigo.e_disparos.remove(balas)
-
+        if self.win or self.avion.vidas < 1:
+            self.jugar = False
     def __pintar_inicio(self):
         pyxel.blt(*constantes.NUM_1942)
         if pyxel.frame_count % 2 == 0:
@@ -320,7 +318,8 @@ class Tablero:
             pyxel.text(92, 180, "HAS PERDIDO", 2)
         # Pinta el punto del jugador y una puntuación más alta (que será la misma porque no se almacena).
         pyxel.text(70, 160, f"PUNTOS DEL JUGADOR: {self.puntuacion.puntos}", 7)
-        pyxel.text(70, 150, f"PUNTUACION MAS ALTA: {self.puntuacion.puntos}", 7)
+        pyxel.text(70, 150, f"PUNTUACION MAS ALTA: {self.puntuacion.puntos}",
+                   7)
 
         pyxel.blt(*constantes.HECHO_POR1)
         pyxel.blt(*constantes.HECHO_POR2)
@@ -352,10 +351,10 @@ class Tablero:
                     self.avion.loops -= 1
 
         if not self.avion.vivo:
-            #se ejecuta cuando el avión choca contra un enemigo o bala 
+            # se ejecuta cuando el avión choca contra un enemigo o bala
             pyxel.blt(self.avion.x, self.avion.y, 0,
-                              *constantes.AVION_MUERTE[self.avion.muerte],
-                              constantes.COLKEY)
+                      *constantes.AVION_MUERTE[self.avion.muerte],
+                      constantes.COLKEY)
             if self.dframe % 5 == 0:
                 self.avion.muerte += 1
                 if self.avion.muerte == len(constantes.AVION_MUERTE) - 1:
@@ -365,13 +364,13 @@ class Tablero:
                     self.avion.muerte = 0
 
     def __pintar_disparo(self):
-        #por cada bala creada en la lista de proyectiles de avión dibuja una
+        # por cada bala creada en la lista de proyectiles de avión dibuja una
         for bala in self.avion.disparos:
             # con ajuste de píxeles para que quede centrado
             pyxel.blt(bala.x + 7, bala.y - 2, *bala.sprite)
 
     def __pintar_e_disparo(self):
-        #crea una bala por cada enemigo del que salga 
+        # crea una bala por cada enemigo del que salga
         for tipo in range(len(self.enemigos)):
             for enemigo in range(len(self.enemigos[tipo])):
                 for bala in self.enemigos[tipo][enemigo].e_disparos:
@@ -384,8 +383,6 @@ class Tablero:
 
     def __pintar_mapa(self):
         pyxel.blt(0, 0, *self.mapa.sprite)
-
-
 
     def __pintar_explosiones(self):
         """"este método pinta las explosiones en el lugar en el que mueren,
