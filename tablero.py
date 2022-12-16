@@ -28,8 +28,8 @@ class Tablero:
         pyxel.init(self.ancho, self.alto, title="Proyecto final: 1942", fps=25)
 
         # Cargamos los ficheros pyxres que vamos a usar
-        pyxel.image(0).load(0, 0, "assets/sprites1.png")
-        pyxel.image(1).load(0, 0, "assets/sprites2.png")
+        pyxel.image(0).load(0, 0, "assets/prites1.png")
+        pyxel.image(1).load(0, 0, "assets/prites2.png")
 
         # Creamos un avión en la mitad de la pantalla en x. En y estará en la
         # posición 200
